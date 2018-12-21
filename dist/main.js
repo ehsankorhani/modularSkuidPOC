@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _teammember_basics_view_info__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./teammember_basics_view/info */ \"./src/teammember_basics_view/info.js\");\n\r\n\r\n(function(skuid){\r\n  var $ = skuid.$;\r\n  $(document.body).one('pageload',function(){\r\n\r\n    _teammember_basics_view_info__WEBPACK_IMPORTED_MODULE_0__[\"default\"].show();\r\n    \r\n  });\r\n})(skuid);\r\n\r\n\r\n/*document.onreadystatechange = function(){\r\n   if(document.readyState === 'complete'){\r\n   }\r\n}*/\r\n\r\n/*document.onload = function() {\r\n\r\n}*/\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _teammember_basics_view_info__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./teammember_basics_view/info */ \"./src/teammember_basics_view/info.js\");\n\r\n\r\n(function(skuid){\r\n  var $ = skuid.$;\r\n  $(document.body).one('pageload',function(){\r\n\r\n    // const info = new Info();\r\n    // info.show();\r\n    console.log('Info:', _teammember_basics_view_info__WEBPACK_IMPORTED_MODULE_0__[\"default\"]);\r\n    \r\n  });\r\n})(skuid);\r\n\r\n\r\n/*document.onreadystatechange = function(){\r\n   if(document.readyState === 'complete'){\r\n   }\r\n}*/\r\n\r\n/*document.onload = function() {\r\n\r\n}*/\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
