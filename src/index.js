@@ -4,7 +4,8 @@ import Info from './teammember_basics_view/info';
   var $ = skuid.$;
   $(document.body).one('pageload',function(){
 
-    Info.show();
+    const info = new Info();
+    info.show();
     
   });
 })(skuid);
