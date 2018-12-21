@@ -1,4 +1,14 @@
-console.log('External file........................');
+import Info from './teammember_basics_view/info';
+
+(function(skuid){
+  var $ = skuid.$;
+  $(document.body).one('pageload',function(){
+
+    Info.show();
+    
+  });
+})(skuid);
+
 
 /*document.onreadystatechange = function(){
    if(document.readyState === 'complete'){
@@ -8,21 +18,3 @@ console.log('External file........................');
 /*document.onload = function() {
 
 }*/
-
-(function(skuid){
-  var $ = skuid.$;
-  $(document.body).one('pageload',function(){
-
-    var models = skuid.model.map(),
-    teamMemberViewModel = models.TeamMember_view || {},
-    teamMemberViewData = teamMemberViewModel.data || [];
-  
-    if (teamMemberViewData.length > 0)
-      console.log('teamMemberViewData:', teamMemberViewData);
-    else
-      console.log('teamMemberViewModel:', teamMemberViewModel);
-
-
-    
-  });
-})(skuid);

@@ -90,10 +90,23 @@
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("console.log('External file........................');\r\n\r\n/*document.onreadystatechange = function(){\r\n   if(document.readyState === 'complete'){\r\n   }\r\n}*/\r\n\r\n/*document.onload = function() {\r\n\r\n}*/\r\n\r\n(function(skuid){\r\n  var $ = skuid.$;\r\n  $(document.body).one('pageload',function(){\r\n\r\n    var models = skuid.model.map(),\r\n    teamMemberViewModel = models.TeamMember_view || {},\r\n    teamMemberViewData = teamMemberViewModel.data || [];\r\n  \r\n    if (teamMemberViewData.length > 0)\r\n      console.log('teamMemberViewData:', teamMemberViewData);\r\n    else\r\n      console.log('teamMemberViewModel:', teamMemberViewModel);\r\n\r\n\r\n    \r\n  });\r\n})(skuid);\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _teammember_basics_view_info__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./teammember_basics_view/info */ \"./src/teammember_basics_view/info.js\");\n\r\n\r\n(function(skuid){\r\n  var $ = skuid.$;\r\n  $(document.body).one('pageload',function(){\r\n\r\n    _teammember_basics_view_info__WEBPACK_IMPORTED_MODULE_0__[\"default\"].show();\r\n    \r\n  });\r\n})(skuid);\r\n\r\n\r\n/*document.onreadystatechange = function(){\r\n   if(document.readyState === 'complete'){\r\n   }\r\n}*/\r\n\r\n/*document.onload = function() {\r\n\r\n}*/\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/teammember_basics_view/info.js":
+/*!********************************************!*\
+  !*** ./src/teammember_basics_view/info.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nclass Info {\r\n  constructor() {\r\n    super();\r\n\r\n    console.log('External file........................');\r\n  }\r\n\r\n  show() {\r\n    var models = skuid.model.map(),\r\n    teamMemberViewModel = models.TeamMember_view || {},\r\n    teamMemberViewData = teamMemberViewModel.data || [];\r\n  \r\n    if (teamMemberViewData.length > 0)\r\n      console.log('teamMemberViewData:', teamMemberViewData);\r\n    else\r\n      console.log('teamMemberViewModel:', teamMemberViewModel);\r\n  }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Info);\r\n\n\n//# sourceURL=webpack:///./src/teammember_basics_view/info.js?");
 
 /***/ })
 
