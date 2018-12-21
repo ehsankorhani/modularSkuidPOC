@@ -106,7 +106,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tea
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nclass Info {\r\n  constructor() {\r\n    super();\r\n\r\n    console.log('External file........................');\r\n  }\r\n\r\n  show() {\r\n    var models = skuid.model.map(),\r\n    teamMemberViewModel = models.TeamMember_view || {},\r\n    teamMemberViewData = teamMemberViewModel.data || [];\r\n  \r\n    if (teamMemberViewData.length > 0)\r\n      console.log('teamMemberViewData:', teamMemberViewData);\r\n    else\r\n      console.log('teamMemberViewModel:', teamMemberViewModel);\r\n  }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Info);\r\n\n\n//# sourceURL=webpack:///./src/teammember_basics_view/info.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nclass Info {\r\n  constructor() {\r\n    console.log('External file........................');\r\n  }\r\n\r\n  show() {\r\n    var models = skuid.model.map(),\r\n    teamMemberViewModel = models.TeamMember_view || {},\r\n    teamMemberViewData = teamMemberViewModel.data || [];\r\n  \r\n    if (teamMemberViewData.length > 0)\r\n      console.log('teamMemberViewData:', teamMemberViewData);\r\n    else\r\n      console.log('teamMemberViewModel:', teamMemberViewModel);\r\n  }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Info);\r\n\n\n//# sourceURL=webpack:///./src/teammember_basics_view/info.js?");
 
 /***/ })
 

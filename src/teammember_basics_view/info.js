@@ -1,7 +1,5 @@
 class Info {
   constructor() {
-    super();
-
     console.log('External file........................');
   }
 
