@@ -4,8 +4,9 @@
 
     import Info from './teammember_basics_view/info';
 
-    const info = new Info();
-    info.show();
+    // const info = new Info();
+    // info.show();
+    console.log('Info:', Info);
     
   });
 })(skuid);
