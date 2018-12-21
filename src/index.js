@@ -5,7 +5,6 @@ import Info from './teammember_basics_view/info';
   $(document.body).one('pageload',function(){
 
     const info = new Info();
-    console.log('info:', info);
     info.show();
         
   });
