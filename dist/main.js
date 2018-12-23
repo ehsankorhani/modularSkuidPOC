@@ -106,7 +106,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _z_t
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"TeamMemberBasicViewStyler\", function() { return Styler; });\n/* harmony import */ var _info__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./info */ \"./src/z_teammember_basics_view/info.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"TeamMemberBasicViewInfo\", function() { return _info__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; });\n\n\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/z_teammember_basics_view/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _info__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./info */ \"./src/z_teammember_basics_view/info.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"TeamMemberBasicViewInfo\", function() { return _info__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; });\n\n/* harmony import */ var _styler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styler */ \"./src/z_teammember_basics_view/styler.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"TeamMemberBasicViewStyler\", function() { return _styler__WEBPACK_IMPORTED_MODULE_1__[\"default\"]; });\n\n\r\n\r\n\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/z_teammember_basics_view/index.js?");
 
 /***/ }),
 
@@ -119,6 +119,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\nclass Info {\r\n  constructor() {\r\n    \r\n  }\r\n\r\n  show() {\r\n    var models = skuid.model.map(),\r\n    teamMemberViewModel = models.TeamMember_view || {},\r\n    teamMemberViewData = teamMemberViewModel.data || [];\r\n  \r\n    if (teamMemberViewData.length > 0)\r\n      console.log('teamMemberViewData:', teamMemberViewData);\r\n    else\r\n      console.log('teamMemberViewModel:', teamMemberViewModel);\r\n  }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Info);\r\n\n\n//# sourceURL=webpack:///./src/z_teammember_basics_view/info.js?");
+
+/***/ }),
+
+/***/ "./src/z_teammember_basics_view/styler.js":
+/*!************************************************!*\
+  !*** ./src/z_teammember_basics_view/styler.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nclass Styler {\r\n  constructor() {\r\n\r\n  }\r\n\r\n  modifyTitle() {\r\n    const title = document.querySelector(\".pf-main-page .nx-page-content .nx-pagetitle-maintitle\");\r\n    title.style.color = \"red\";\r\n  }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Styler);\r\n\n\n//# sourceURL=webpack:///./src/z_teammember_basics_view/styler.js?");
 
 /***/ })
 
