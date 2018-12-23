@@ -94,7 +94,31 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n!(function webpackMissingModule() { var e = new Error(\"Cannot find module './z_teammember_basics_view/index'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }());\n\r\n\r\n(function(skuid){\r\n  var $ = skuid.$;\r\n  $(document.body).one('pageload',function(){\r\n\r\n    const teamMemberBasicViewShow = new !(function webpackMissingModule() { var e = new Error(\"Cannot find module './z_teammember_basics_view/index'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }())();\r\n    teamMemberBasicViewShow.show();\r\n        \r\n  });\r\n})(skuid);\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _z_teammember_basics_view_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./z_teammember_basics_view/index */ \"./src/z_teammember_basics_view/index.js\");\n\r\n\r\n(function(skuid){\r\n  var $ = skuid.$;\r\n  $(document.body).one('pageload',function(){\r\n\r\n    const teamMemberBasicViewShow = new _z_teammember_basics_view_index__WEBPACK_IMPORTED_MODULE_0__[\"TeamMemberBasicViewShow\"]();\r\n    teamMemberBasicViewShow.show();\r\n        \r\n  });\r\n})(skuid);\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/z_teammember_basics_view/index.js":
+/*!***********************************************!*\
+  !*** ./src/z_teammember_basics_view/index.js ***!
+  \***********************************************/
+/*! exports provided: TeamMemberBasicViewShow */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _info__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./info */ \"./src/z_teammember_basics_view/info.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"TeamMemberBasicViewShow\", function() { return _info__WEBPACK_IMPORTED_MODULE_0__[\"Show\"]; });\n\n\r\n\n\n//# sourceURL=webpack:///./src/z_teammember_basics_view/index.js?");
+
+/***/ }),
+
+/***/ "./src/z_teammember_basics_view/info.js":
+/*!**********************************************!*\
+  !*** ./src/z_teammember_basics_view/info.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nclass Info {\r\n  constructor() {\r\n    console.log('External file........................');\r\n  }\r\n\r\n  show() {\r\n    var models = skuid.model.map(),\r\n    teamMemberViewModel = models.TeamMember_view || {},\r\n    teamMemberViewData = teamMemberViewModel.data || [];\r\n  \r\n    if (teamMemberViewData.length > 0)\r\n      console.log('teamMemberViewData:', teamMemberViewData);\r\n    else\r\n      console.log('teamMemberViewModel:', teamMemberViewModel);\r\n  }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Info);\r\n\n\n//# sourceURL=webpack:///./src/z_teammember_basics_view/info.js?");
 
 /***/ })
 
