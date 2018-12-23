@@ -1,1 +1,3 @@
-export {Show as TeamMemberBasicViewShow} from './info';
+import Info from './info';
+
+export {Info as TeamMemberBasicViewInfo}
