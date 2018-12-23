@@ -1,6 +1,6 @@
 class Info {
   constructor() {
-    console.log('External file........................');
+    
   }
 
   show() {
