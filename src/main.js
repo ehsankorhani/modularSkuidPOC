@@ -15,7 +15,7 @@ import './my-page/style.css';
     teamMemberBasicViewStyler.modifyTitle();
   });
 
-  // $(document).ready(function() {
+  $(document).ready(function() {
   //   console.log('doc ready:', document.getElementById("sk-6ATII-669"));
-  // });
+  });
 })(skuid);
