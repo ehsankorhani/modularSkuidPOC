@@ -6,7 +6,6 @@ import './my-page/style.css';
   var $ = skuid.$;
   $(document.body).one('pageload',function(){
     console.log('External file........................');
-    //console.log('page load:', document.getElementById("sk-6ATII-669"));
     window.setTimeout(function(){
       const teamMemberBasicViewInfo = new TeamMemberBasicViewInfo();
       teamMemberBasicViewInfo.show();
