@@ -4,7 +4,7 @@ class Info {
   }
 
   show() {
-    var models = skuid.model.map(),
+    const models = skuid.model.map(),
     teamMemberViewModel = models.TeamMember_view || {},
     teamMemberViewData = teamMemberViewModel.data || [];
   
@@ -12,8 +12,13 @@ class Info {
       console.log('teamMemberViewData:', teamMemberViewData);
     else
       console.log('teamMemberViewModel:', teamMemberViewModel);
-  }
 
+    //const editBtn = document.getElementById("sk-312yZl-210");
+    const editBtn = $("sk-312yZl-210");
+    editBtn.on("click", function(e) {
+      alert("Start editing");
+    });
+  }
 }
 
 export default Info;
