@@ -1,18 +1,20 @@
-import {TeamMemberBasicViewInfo, TeamMemberBasicViewStyler} from './z_teammember_basics_view/index';
+import {TeamMemberBasicView, TeamMemberBasicViewStyler} from './z_teammember_basics_view/index';
 import './z_teammember_basics_view/style.css';
 import './my-page/style.css';
 
 (function(skuid){
-  var $ = skuid.$;
+  const $ = skuid.$,
+        delay = 1000;
   $(document.body).one('pageload',function(){
-    console.log('External file........................');
     window.setTimeout(function(){
-      const teamMemberBasicViewInfo = new TeamMemberBasicViewInfo();
-      teamMemberBasicViewInfo.show();
+
+      // const teamMemberBasicViewInfo = new TeamMemberBasicViewInfo();
+      // teamMemberBasicViewInfo.show();
+      const teamMemberBasicView = new TeamMemberBasicView();
       
       const teamMemberBasicViewStyler = new TeamMemberBasicViewStyler();
       teamMemberBasicViewStyler.modifyTitle();
-    }, 1000);
 
+    }, delay);
   });
 })(skuid);
