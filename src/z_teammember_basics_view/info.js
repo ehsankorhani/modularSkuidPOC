@@ -4,9 +4,10 @@ class Info {
   }
 
   show() {
-    const models = skuid.model.map(),
-    teamMemberViewModel = models.TeamMember_view || {},
-    teamMemberViewData = teamMemberViewModel.data || [];
+    const $ = skuid.$,
+          models = skuid.model.map(),
+          teamMemberViewModel = models.TeamMember_view || {},
+          teamMemberViewData = teamMemberViewModel.data || [];
   
     if (teamMemberViewData.length > 0)
       console.log('teamMemberViewData:', teamMemberViewData);
@@ -14,7 +15,7 @@ class Info {
       console.log('teamMemberViewModel:', teamMemberViewModel);
 
     //const editBtn = document.getElementById("sk-312yZl-210");
-    const editBtn = $("sk-312yZl-210");
+    const editBtn = $("#sk-312yZl-210");
     editBtn.on("click", function(e) {
       alert("Start editing");
     });
