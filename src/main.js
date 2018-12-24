@@ -6,7 +6,7 @@ import './my-page/style.css';
   var $ = skuid.$;
   $(document.body).one('pageload',function(){
     console.log('External file........................');
-    console.log('page load:', document.getElementById("sk-6ATII-669"));
+    //console.log('page load:', document.getElementById("sk-6ATII-669"));
 
     const teamMemberBasicViewInfo = new TeamMemberBasicViewInfo();
     teamMemberBasicViewInfo.show();
@@ -15,7 +15,7 @@ import './my-page/style.css';
     teamMemberBasicViewStyler.modifyTitle();
   });
 
-  $(document).ready(function() {
-    console.log('doc ready:', document.getElementById("sk-6ATII-669"));
-});
+  // $(document).ready(function() {
+  //   console.log('doc ready:', document.getElementById("sk-6ATII-669"));
+  // });
 })(skuid);
