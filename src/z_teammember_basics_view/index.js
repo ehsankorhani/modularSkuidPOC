@@ -4,8 +4,8 @@ import Styler from './styler';
 class Index {
 
   constructor() {
-    const teamMemberBasicViewInfo = new TeamMemberBasicViewInfo();
-    teamMemberBasicViewInfo.show();
+    const info = new Info();
+    info.show();
   }
 
 }
