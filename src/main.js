@@ -1,4 +1,6 @@
 import {TeamMemberBasicViewInfo, TeamMemberBasicViewStyler} from './z_teammember_basics_view/index';
+import './z_teammember_basics_view/style.css';
+import './my-page/style.css';
 
 (function(skuid){
   var $ = skuid.$;
