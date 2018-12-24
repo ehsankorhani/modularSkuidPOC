@@ -5,10 +5,10 @@ import {TeamMemberBasicViewInfo, TeamMemberBasicViewStyler} from './z_teammember
   $(document.body).one('pageload',function(){
     console.log('External file........................');
 
-    // const teamMemberBasicViewInfo = new TeamMemberBasicViewInfo();
-    // teamMemberBasicViewInfo.show();
+    const teamMemberBasicViewInfo = new TeamMemberBasicViewInfo();
+    teamMemberBasicViewInfo.show();
     
-    // const teamMemberBasicViewStyler = new TeamMemberBasicViewStyler();
-    // teamMemberBasicViewStyler.modifyTitle();
+    const teamMemberBasicViewStyler = new TeamMemberBasicViewStyler();
+    teamMemberBasicViewStyler.modifyTitle();
   });
 })(skuid);
