@@ -8,8 +8,6 @@ import './my-page/style.css';
   $(document.body).one('pageload',function(){
     window.setTimeout(function(){
 
-      // const teamMemberBasicViewInfo = new TeamMemberBasicViewInfo();
-      // teamMemberBasicViewInfo.show();
       const teamMemberBasicView = new TeamMemberBasicView();
       
       const teamMemberBasicViewStyler = new TeamMemberBasicViewStyler();

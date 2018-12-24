@@ -14,7 +14,6 @@ class Info {
     else
       console.log('teamMemberViewModel:', teamMemberViewModel);
 
-    //const editBtn = document.getElementById("sk-312yZl-210");
     const editBtn = $("#sk-312yZl-210");
     editBtn.on("click", function(e) {
       alert("Start editing");
@@ -22,4 +21,5 @@ class Info {
   }
 }
 
-export default Info;
+//export default Info;
+export default Info.prototype.show;
