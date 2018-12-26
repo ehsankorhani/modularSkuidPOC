@@ -16,7 +16,7 @@ class Info {
   }
 
   edit = () => {
-    const editBtn = $("#sk-312yZl-210");
+    const editBtn = this.$("#sk-312yZl-210");
     editBtn.on("click", function(e) {
       alert("Start editing");
     });
