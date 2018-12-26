@@ -5,7 +5,8 @@ class Index {
 
   constructor() {
     const info = new Info();    
-    // info.show();
+    info.show();
+    info.edit();
     //Info();
   }
 
