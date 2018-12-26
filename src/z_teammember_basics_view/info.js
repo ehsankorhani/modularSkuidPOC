@@ -1,9 +1,12 @@
 class Info {
   constructor() {
     this.$ = skuid.$;
+    this.models = skuid.model.map();
+    this.teamMemberViewModel = models.TeamMember_view || {};
+    this.teamMemberViewData = teamMemberViewModel.data || [];
   }
 
-  show() {
+  log() {
     const $ = skuid.$,
           models = skuid.model.map(),
           teamMemberViewModel = models.TeamMember_view || {},
@@ -20,6 +23,11 @@ class Info {
     editBtn.on("click", function(e) {
       alert("Start editing");
     });
+  }
+
+  show = () => {
+    if (teamMemberViewData.length > 0)
+      alert(teamMemberViewData[0].Email);
   }
 }
 
