@@ -1,8 +1,8 @@
 class Info {
   constructor() {
     this.$ = skuid.$;
-    this.models = skuid.model.map();
-    this.teamMemberViewModel = models.TeamMember_view || {};
+    const models = skuid.model.map(),
+          teamMemberViewModel = models.TeamMember_view || {};
     this.teamMemberViewData = teamMemberViewModel.data || [];
   }
 
