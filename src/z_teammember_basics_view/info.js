@@ -1,6 +1,6 @@
 class Info {
   constructor() {
-    
+    this.$ = skuid.$;
   }
 
   show() {
@@ -13,7 +13,9 @@ class Info {
       console.log('teamMemberViewData:', teamMemberViewData);
     else
       console.log('teamMemberViewModel:', teamMemberViewModel);
+  }
 
+  edit = () => {
     const editBtn = $("#sk-312yZl-210");
     editBtn.on("click", function(e) {
       alert("Start editing");
