@@ -23,5 +23,5 @@ class Info {
   }
 }
 
-//export default Info;
-export default Info.prototype.show;
+export default Info;
+//export default Info.prototype.show;

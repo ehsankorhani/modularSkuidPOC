@@ -4,9 +4,9 @@ import Styler from './styler';
 class Index {
 
   constructor() {
-    // const info = new Info();    
+    const info = new Info();    
     // info.show();
-    Info();
+    //Info();
   }
 
 }
