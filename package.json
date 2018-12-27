@@ -2,7 +2,7 @@
   "name": "modularskuidpoc",
   "version": "0.0.1",
   "description": "A proof of concept for modular JavaScript and CSS in SKuid",
-  "main": "index.js",
+  "main": "main.js",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",

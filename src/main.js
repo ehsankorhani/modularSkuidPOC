@@ -8,7 +8,7 @@ import './z_teammember_basics_view/style.css';
   $(document.body).one('pageload',function(){
     window.setTimeout(function(){
 
-      // const teamMemberBasicView = new TeamMemberBasicView();
+      const teamMemberBasicView = new TeamMemberBasicView();
       
       // const teamMemberBasicViewStyler = new TeamMemberBasicViewStyler();
       // teamMemberBasicViewStyler.modifyTitle();

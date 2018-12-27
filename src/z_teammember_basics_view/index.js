@@ -1,7 +1,7 @@
 import PageTitle from "./pageTitle";
 
-export default class Index {
+export class Index {
   constructor() {
-
+    const pageTitle = new PageTitle();
   }
 }
