@@ -1,16 +1,7 @@
-import Info from './info';
-import Styler from './styler';
+import PageTitle from "./pageTitle";
 
-class Index {
-
+export default class Index {
   constructor() {
-    const info = new Info();    
-    info.log();
-    info.edit();
-    //Info();
+
   }
-
 }
-
-export {Styler as TeamMemberBasicViewStyler}
-export {Index as TeamMemberBasicView}
