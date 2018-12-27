@@ -1,4 +1,4 @@
-import { UserEmail } from "../util/user";
+import { getUserEmail } from "../util/user";
 
 class pageTitle {
   constructor() {
@@ -15,7 +15,7 @@ class pageTitle {
   }
 
   getUser = () => {
-    return UserEmail(this.data.teamMemberViewData[0]);
+    return getUserEmail(this.data.teamMemberViewData[0]);
   }
 
   render = () => {

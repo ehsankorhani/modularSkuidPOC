@@ -1,14 +1,10 @@
-class User {
-  constructor() {
 
-  }
+getUserEmail = (teamMember) => {
+  if (teamMember && teamMember.Email)
+    return teamMember.Email;
 
-  getUserEmail = (teamMember) => {
-    if (teamMember && teamMember.Email)
-      return teamMember.Email;
-
-    return 'Anonymous';
-  }
+  return 'Anonymous';
 }
 
-export {getUserEmail as UserEmail};
+//export {getUserEmail as UserEmail};
+export {getUserEmail};
