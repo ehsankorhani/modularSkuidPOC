@@ -3,7 +3,12 @@ class Info {
     this.$ = skuid.$;
     const models = skuid.model.map(),
           teamMemberViewModel = models.TeamMember_view || {};
-    this.teamMemberViewData = teamMemberViewModel.data || [];
+ 
+    this.data = {
+      teamMemberViewData: teamMemberViewModel.data || []
+    }
+
+    show();
   }
 
   log() {
@@ -26,8 +31,8 @@ class Info {
   }
 
   show = () => {
-    if (teamMemberViewData.length > 0)
-      alert(teamMemberViewData[0].Email);
+    if (this.data.teamMemberViewData.length > 0)
+      alert(this.data.teamMemberViewData[0].Email);
   }
 }
 
