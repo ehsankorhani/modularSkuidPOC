@@ -8,7 +8,7 @@ class Info {
       teamMemberViewData: teamMemberViewModel.data || []
     }
 
-    show();
+    this.show();
   }
 
   log() {
