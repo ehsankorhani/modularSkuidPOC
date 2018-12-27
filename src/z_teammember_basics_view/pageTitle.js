@@ -20,8 +20,8 @@ class pageTitle {
   }
 
   render = () => {
-    const pageTilteEl = document.querySelector("#page-title-main.nx-template");
-    pageTilteEl.innerHTML = this.getUser();
+    const pageTilteEl = document.querySelector("#page-title-main .nx-template");
+    pageTilteEl.innerHTML = "User: " + this.getUser();
   }
 }
 
