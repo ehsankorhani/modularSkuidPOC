@@ -1,3 +1,5 @@
+import { UserEmail } from "../util/user";
+
 class pageTitle {
   constructor() {
     this.$ = skuid.$;
@@ -13,10 +15,7 @@ class pageTitle {
   }
 
   getUser = () => {
-    if (this.data.teamMemberViewData.length > 0 && this.data.teamMemberViewData[0].Email)
-      return this.data.teamMemberViewData[0].Email;
-
-    return 'Anonymous';
+    return UserEmail(this.data.teamMemberViewData[0]);
   }
 
   render = () => {
