@@ -1,0 +1,1413 @@
+<skuidpage personalizationmode="server" showsidebar="false" showheader="false" theme="PractiFI SPA Lightning">
+  <models>
+    <model id="NewClientProcess" limit="0" query="false" createrowifnonefound="true" sobject="cloupra__Applied_Process__c" datasource="salesforce">
+      <fields>
+        <field id="Id"/>
+        <field id="cloupra__Entity__c"/>
+        <field id="cloupra__Entity__r.Name"/>
+        <field id="cloupra__Service__c"/>
+        <field id="cloupra__Service__r.Name"/>
+        <field id="cloupra__Process__c"/>
+        <field id="cloupra__Process__r.Name"/>
+        <field id="cloupra__Service__r.cloupra__Service_Type__r.Name"/>
+        <field id="cloupra__Process__r.cloupra__Code__c"/>
+        <field id="cloupra__Stage__c"/>
+        <field id="cloupra__Stage__r.Name"/>
+        <field id="OwnerId"/>
+        <field id="Owner.Name"/>
+        <field id="cloupra__Due_Date__c"/>
+        <field id="cloupra__Process__r.cloupra__Related_To__c"/>
+        <field id="Name"/>
+        <field id="cloupra__Description__c"/>
+        <field id="cloupra__Service__r.cloupra__Client__c"/>
+        <field id="cloupra__Service__r.cloupra__Client__r.Name"/>
+        <field id="cloupra__Entity__r.cloupra__Orgn_Type__c"/>
+        <field id="cloupra__Service__r.OwnerId"/>
+        <field id="cloupra__Service__r.Owner.Name"/>
+        <field id="cloupra__Entity__r.OwnerId"/>
+        <field id="cloupra__Entity__r.Owner.Name"/>
+        <field id="Owner.IsActive"/>
+        <field id="cloupra__Process__r.cloupra__Assignment_Type__c"/>
+        <field id="cloupra__Process__r.OwnerId"/>
+        <field id="cloupra__Process__r.Owner.Name"/>
+        <field id="cloupra__Process__r.cloupra__Relationship_Type__c"/>
+        <field id="cloupra__Process__r.cloupra__Relationship_Type__r.Name"/>
+        <field id="cloupra__Service__r.cloupra__Service_Type__r.cloupra__Context__c"/>
+        <field id="cloupra__Service__r.cloupra__Employer__c"/>
+        <field id="cloupra__Service__r.cloupra__Employer__r.Name"/>
+        <field id="cloupra__Process__r.cloupra__Task_Due_Date_Basis__c"/>
+        <field id="cloupra__Person__c"/>
+        <field id="cloupra__Person__r.Name"/>
+        <field id="cloupra__Actual_Effort__c"/>
+        <field id="FromContext" uionly="true" displaytype="FORMULA" label="FromContext" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+          <formula>IF(STARTS_WITH({{{$Model.NAV_State.data.0.id1}}}, &apos;003&apos;) || CONTAINS({{{$Model.NAV_State.data.0.internal_extraconditions}}}, &apos;personId=003&apos;), &apos;person&apos;,&apos;notperson&apos;)
+</formula>
+        </field>
+        <field id="providerId" uionly="true" displaytype="TEXT" label="providerId" defaultvaluetype="fieldvalue"/>
+      </fields>
+      <conditions logic="">
+        <condition type="param" value="clientId" field="cloupra__Entity__c" operator="=" enclosevalueinquotes="true" novaluebehavior="deactivate"/>
+        <condition type="param" value="cliententityId" field="cloupra__Entity__c" operator="=" enclosevalueinquotes="true" novaluebehavior="deactivate"/>
+        <condition type="param" value="providerId" field="cloupra__Entity__c" operator="=" enclosevalueinquotes="true" novaluebehavior="deactivate"/>
+        <condition type="param" value="memberaccountId" field="cloupra__Service__c" operator="=" enclosevalueinquotes="true" novaluebehavior="deactivate"/>
+        <condition type="param" value="adviceserviceId" field="cloupra__Service__c" operator="=" state="" novaluebehavior="deactivate" mergefield="Id" enclosevalueinquotes="true"/>
+        <condition type="param" value="subfundId" field="cloupra__Service__c" operator="=" enclosevalueinquotes="true" novaluebehavior="deactivate"/>
+        <condition type="userinfo" value="" field="OwnerId" operator="=" enclosevalueinquotes="true" userinfotype="userid"/>
+        <condition type="param" value="personId" field="cloupra__Person__c" fieldtargetobjects="Contact" operator="=" enclosevalueinquotes="true" novaluebehavior="deactivate"/>
+      </conditions>
+      <actions>
+        <action>
+          <actions>
+            <action type="setCondition" model="EntityPeople" condition="cloupra__To_Organisation__c" value="{{cloupra__Entity__c}}"/>
+            <action type="requeryModel" model="EntityPeople" behavior="standard"/>
+            <action type="requeryModel" model="Services" behavior="standard"/>
+            <action type="custom" snippet="renderService"/>
+          </actions>
+          <events>
+            <event>row.updated</event>
+          </events>
+          <fields>
+            <field>cloupra__Entity__c</field>
+          </fields>
+        </action>
+        <action>
+          <actions>
+            <action type="branch" model="NewClientProcess">
+              <iftrueactions>
+                <action type="updateRow" fieldmodel="NewClientProcess" affectedrows="context" field="cloupra__Entity__c" enclosevalueinquotes="true" value="{{{cloupra__Service__r.cloupra__Client__c}}}"/>
+              </iftrueactions>
+              <formula>ISBLANK({{cloupra__Service__c}}) == false &amp;&amp; ISBLANK({{cloupra__Service__r.cloupra__Client__c}}) == false</formula>
+            </action>
+            <action type="branch" model="NewClientProcess">
+              <iftrueactions>
+                <action type="updateRow" fieldmodel="NewClientProcess" affectedrows="context" field="cloupra__Entity__c" enclosevalueinquotes="true" value="{{cloupra__Service__r.cloupra__Employer__c}}"/>
+              </iftrueactions>
+              <formula>ISBLANK({{cloupra__Service__c}}) == false &amp;&amp; ISBLANK({{cloupra__Service__r.cloupra__Employer__c}}) == false</formula>
+            </action>
+          </actions>
+          <events>
+            <event>row.updated</event>
+          </events>
+          <fields>
+            <field>cloupra__Service__c</field>
+          </fields>
+        </action>
+        <action>
+          <actions>
+            <action type="custom" snippet="processSelection"/>
+            <action type="custom" snippet="renderProcessName"/>
+          </actions>
+          <events>
+            <event>row.updated</event>
+          </events>
+          <fields>
+            <field>cloupra__Entity__c</field>
+            <field>cloupra__Service__c</field>
+          </fields>
+        </action>
+        <action>
+          <actions>
+            <action type="custom" snippet="relativeProcessAssignment"/>
+            <action type="custom" snippet="renderProcessName"/>
+            <action type="custom" snippet="renderProcessDueDate"/>
+          </actions>
+          <events>
+            <event>row.updated</event>
+          </events>
+          <fields>
+            <field>cloupra__Process__c</field>
+          </fields>
+        </action>
+      </actions>
+    </model>
+    <model id="Processes" limit="500" query="false" createrowifnonefound="false" sobject="cloupra__Process__c" orderby="cloupra__Order__c, Id" datasource="salesforce">
+      <fields>
+        <field id="Id"/>
+        <field id="Name"/>
+        <field id="cloupra__Code__c"/>
+        <field id="cloupra__Related_To__c"/>
+        <field id="cloupra__Active__c"/>
+        <field id="cloupra__Order__c"/>
+        <field id="cloupra__Assignment_Type__c"/>
+        <field id="OwnerId"/>
+        <field id="Owner.Name"/>
+        <field id="cloupra__Relationship_Type__c"/>
+        <field id="cloupra__Relationship_Type__r.Name"/>
+        <field id="cloupra__Stage__c"/>
+        <field id="cloupra__Stage__r.Name"/>
+        <field id="cloupra__Task_Due_Date_Basis__c"/>
+        <field id="cloupra__Default_Duration__c"/>
+      </fields>
+      <conditions logic="1 and 4 and (2 or 3)">
+        <condition type="fieldvalue" value="true" enclosevalueinquotes="false" field="cloupra__Active__c"/>
+        <condition type="fieldvalue" value="Division" field="cloupra__Related_To__c" operator="includes" enclosevalueinquotes="true"/>
+        <condition type="modelmerge" value="" field="cloupra__Related_To__c" operator="includes" model="NewClientProcess" enclosevalueinquotes="true" mergefield="ProcessRelatedTo" novaluebehavior="deactivate" state="filterableoff" inactive="true" name="cloupra__Related_To__c"/>
+        <condition type="blank" value="null" field="cloupra__Regulation__c" fieldtargetobjects="cloupra__Category__c" operator="=" enclosevalueinquotes="false"/>
+      </conditions>
+      <actions/>
+    </model>
+    <model id="ProcessSteps" limit="50" query="false" createrowifnonefound="false" sobject="cloupra__Process_Step__c" orderby="cloupra__Order__c DESC, Id" datasource="salesforce">
+      <fields>
+        <field id="cloupra__Order__c"/>
+        <field id="cloupra__Team_Member__c"/>
+        <field id="cloupra__Team_Member__r.Name"/>
+        <field id="Id"/>
+        <field id="OwnerId"/>
+        <field id="Owner.Name"/>
+        <field id="cloupra__Estimated_Effort_Days__c"/>
+        <field id="cloupra__Estimated_Effort_Hours__c"/>
+        <field id="cloupra__Estimated_Effort_Minutes__c"/>
+        <field id="cloupra__Description__c"/>
+        <field id="cloupra__Process__c"/>
+        <field id="cloupra__Process__r.Name"/>
+        <field id="cloupra__Task_Subject__c"/>
+        <field id="cloupra__Due_Date__c"/>
+        <field id="cloupra__Stage__c"/>
+        <field id="cloupra__Stage__r.Name"/>
+        <field id="cloupra__Task_Group__c"/>
+        <field id="cloupra__Task_Group__r.Name"/>
+        <field id="cloupra__Relationship_Type__c"/>
+        <field id="cloupra__Relationship_Type__r.Name"/>
+        <field id="cloupra__Assignment_Type__c"/>
+        <field id="cloupra__Priority__c"/>
+        <field id="cloupra__Priority__r.Name"/>
+        <field id="Owner.IsActive"/>
+        <field id="cloupra__Due_Date_Offset__c"/>
+      </fields>
+      <conditions>
+        <condition type="modelmerge" value="" field="cloupra__Process__c" operator="=" state="filterableon" model="NewClientProcess" enclosevalueinquotes="true" mergefield="cloupra__Process__c" novaluebehavior="deactivate" inactive="false" name="SelectedProcessId"/>
+        <condition type="fieldvalue" value="false" enclosevalueinquotes="false" field="cloupra__Suppress_At_Launch__c"/>
+        <condition type="fieldvalue" value="true" enclosevalueinquotes="false" field="cloupra__Active__c"/>
+      </conditions>
+      <actions/>
+    </model>
+    <model id="NewTasks" limit="" query="false" createrowifnonefound="false" sobject="cloupra__Task__c" orderby="cloupra__Due_Date__c, Id" datasource="salesforce">
+      <fields>
+        <field id="OwnerId"/>
+        <field id="Owner.Name"/>
+        <field id="cloupra__Estimated_Effort_Days__c"/>
+        <field id="cloupra__Estimated_Effort_Hours__c"/>
+        <field id="cloupra__Estimated_Effort_Minutes__c"/>
+        <field id="cloupra__Waiting_on_Predecessor__c"/>
+        <field id="cloupra__Based_On_Process_Step__c"/>
+        <field id="Name"/>
+        <field id="cloupra__Due_Date__c"/>
+        <field id="cloupra__Stage__c"/>
+        <field id="cloupra__Stage__r.Name"/>
+        <field id="cloupra__Priority__c"/>
+        <field id="cloupra__Priority__r.Name"/>
+        <field id="cloupra__Priority__r.cloupra__Text_Colour__c"/>
+        <field id="cloupra__Task_Description__c"/>
+        <field id="cloupra__Process_Step__c"/>
+        <field id="cloupra__Process_Step__r.Name"/>
+        <field id="cloupra__Rich_Description__c"/>
+      </fields>
+      <conditions>
+        <condition type="modelmerge" value="" field="cloupra__Applied_Process__c" operator="=" model="NewClientProcess" enclosevalueinquotes="true" mergefield="Id" novaluebehavior="deactivate"/>
+      </conditions>
+      <actions/>
+    </model>
+    <model id="Services" limit="200" query="false" createrowifnonefound="false" sobject="cloupra__Service__c" datasource="salesforce">
+      <fields>
+        <field id="cloupra__Service_Type__c"/>
+        <field id="cloupra__Service_Type__r.Name"/>
+        <field id="cloupra__Client__c"/>
+        <field id="cloupra__Client__r.Name"/>
+        <field id="OwnerId"/>
+        <field id="Owner.Name"/>
+        <field id="Name"/>
+        <field id="Id"/>
+        <field id="cloupra__Service_Type__r.cloupra__Context__c"/>
+        <field id="cloupra__Client__r.cloupra__Orgn_Type__c"/>
+        <field id="cloupra__Employer__c"/>
+        <field id="cloupra__Employer__r.Name"/>
+        <field id="cloupra__Employer__r.cloupra__Orgn_Type__c"/>
+      </fields>
+      <conditions logic="(1 and 2 and 5)   or  (3 and 4 and 5)">
+        <condition type="modelmerge" value="" field="cloupra__Client__c" operator="=" novaluebehavior="deactivate" state="" model="NewClientProcess" enclosevalueinquotes="true" mergefield="cloupra__Entity__c" inactive="false"/>
+        <condition type="blank" value="null" field="cloupra__Client__c" operator="!=" enclosevalueinquotes="false"/>
+        <condition type="modelmerge" value="" field="cloupra__Employer__c" operator="=" model="NewClientProcess" enclosevalueinquotes="true" mergefield="cloupra__Entity__c" novaluebehavior="deactivate"/>
+        <condition type="blank" value="null" field="cloupra__Employer__c" operator="!=" enclosevalueinquotes="false"/>
+        <condition type="multiple" value="" field="cloupra__Service_Type__r.cloupra__Context__c" operator="in" enclosevalueinquotes="true">
+          <values>
+            <value>adviceservice</value>
+            <value>memberaccount</value>
+          </values>
+        </condition>
+      </conditions>
+      <actions/>
+    </model>
+    <model id="ClientProcessStages" limit="0" query="false" createrowifnonefound="false" sobject="cloupra__Category__c" orderby="" type="" datasource="salesforce">
+      <fields>
+        <field id="Name"/>
+        <field id="Id"/>
+      </fields>
+      <conditions/>
+      <actions/>
+    </model>
+    <model id="Relationships" limit="500" query="false" createrowifnonefound="false" sobject="cloupra__Relationship__c" datasource="salesforce">
+      <fields>
+        <field id="cloupra__From_Team_Member__c"/>
+        <field id="cloupra__From_Team_Member__r.Name"/>
+        <field id="cloupra__Relationship_Type__c"/>
+        <field id="cloupra__Relationship_Type__r.Name"/>
+        <field id="cloupra__From_Team_Member__r.IsActive"/>
+        <field id="cloupra__To_Team_Member__c"/>
+        <field id="cloupra__To_Team_Member__r.Name"/>
+        <field id="cloupra__To_Organisation__c"/>
+        <field id="cloupra__To_Organisation__r.Name"/>
+      </fields>
+      <conditions logic="(1 or 3) and 2 and (4 or 5) and (6 or 7) and 8">
+        <condition type="fieldvalue" value="" enclosevalueinquotes="true" field="cloupra__To_Team_Member__c" state="filterableoff" inactive="true" name="cloupra__To_Team_Member__c" operator="="/>
+        <condition type="multiple" value="" field="cloupra__Relationship_Type__c" state="filterableoff" inactive="true" name="cloupra__Relationship_Type__c" operator="in" enclosevalueinquotes="true">
+          <values>
+            <value/>
+          </values>
+        </condition>
+        <condition type="fieldvalue" value="" enclosevalueinquotes="true" field="cloupra__To_Organisation__c" fieldtargetobjects="Account" operator="=" state="filterableoff" inactive="true" name="cloupra__To_Organisation__c"/>
+        <condition type="blank" value="null" field="cloupra__Start_Date__c" operator="=" enclosevalueinquotes="false"/>
+        <condition type="fieldvalue" value="TODAY" enclosevalueinquotes="false" field="cloupra__Start_Date__c" operator="lte"/>
+        <condition type="blank" value="null" field="cloupra__End_Date__c" operator="=" enclosevalueinquotes="false"/>
+        <condition type="fieldvalue" value="TODAY" enclosevalueinquotes="false" field="cloupra__End_Date__c" operator="gte"/>
+        <condition type="fieldvalue" value="true" enclosevalueinquotes="false" field="cloupra__From_Team_Member__r.IsActive"/>
+      </conditions>
+      <actions/>
+    </model>
+    <model id="InactiveUsers" limit="2000" query="false" createrowifnonefound="false" sobject="User" datasource="salesforce">
+      <fields>
+        <field id="IsActive"/>
+        <field id="Name"/>
+      </fields>
+      <conditions>
+        <condition type="fieldvalue" value="false" enclosevalueinquotes="false" field="IsActive"/>
+        <condition type="multiple" value="" field="Id" operator="in" enclosevalueinquotes="true" state="filterableoff" inactive="true" name="userIds">
+          <values>
+            <value/>
+          </values>
+        </condition>
+      </conditions>
+      <actions/>
+    </model>
+    <model id="NAV_ChildState" limit="1" query="false" createrowifnonefound="true" doclone="" unloadwarningifunsavedchanges="false" datasource="salesforce">
+      <fields>
+        <field id="context" uionly="true" displaytype="TEXT" label="context"/>
+        <field id="tab" uionly="true" displaytype="TEXT" label="tab"/>
+        <field id="action" uionly="true" displaytype="TEXT" label="action"/>
+        <field id="id1" uionly="true" displaytype="TEXT" label="id1" length="18"/>
+      </fields>
+      <conditions/>
+      <actions/>
+    </model>
+    <model id="TaskStages" limit="0" query="false" createrowifnonefound="false" sobject="cloupra__Category__c" orderby="" type="" datasource="salesforce">
+      <fields>
+        <field id="Name"/>
+        <field id="Id"/>
+      </fields>
+      <conditions/>
+      <actions/>
+    </model>
+    <model id="TaskPriorities" limit="0" query="false" createrowifnonefound="false" sobject="cloupra__Category__c" orderby="" adapter="salesforce" type="">
+      <fields>
+        <field id="Name"/>
+        <field id="Id"/>
+      </fields>
+      <conditions/>
+      <actions/>
+    </model>
+    <model id="RelatedOwner" limit="1" query="true" createrowifnonefound="false" datasource="salesforce" sobject="cloupra__Relationship__c">
+      <fields>
+        <field id="Id"/>
+        <field id="cloupra__From_Team_Member__c"/>
+        <field id="cloupra__From_Team_Member__r.Name"/>
+      </fields>
+      <conditions logic="(2 or 4) and 1 and 3  and (5 or 6) and (7 or 8)">
+        <condition type="modelmerge" value="" field="cloupra__Relationship_Type__c" operator="=" model="NewClientProcess" enclosevalueinquotes="true" mergefield="cloupra__Process__r.cloupra__Relationship_Type__c" novaluebehavior="noquery"/>
+        <condition type="fieldvalue" value="" field="cloupra__To_Team_Member__c" operator="=" mergefield="cloupra__Entity__r.OwnerId" novaluebehavior="noquery" enclosevalueinquotes="true" state="filterableoff" inactive="true" name="serOrEntityOwner"/>
+        <condition type="fieldvalue" value="true" enclosevalueinquotes="false" field="cloupra__From_Team_Member__r.IsActive"/>
+        <condition type="fieldvalue" value="" enclosevalueinquotes="true" field="cloupra__To_Organisation__c" fieldtargetobjects="Account" state="filterableoff" inactive="true" name="serOrClient"/>
+        <condition type="blank" value="null" field="cloupra__Start_Date__c" operator="=" enclosevalueinquotes="false"/>
+        <condition type="fieldvalue" value="TODAY" enclosevalueinquotes="false" field="cloupra__Start_Date__c" operator="lte"/>
+        <condition type="blank" value="null" field="cloupra__End_Date__c" operator="=" enclosevalueinquotes="false"/>
+        <condition type="fieldvalue" value="TODAY" enclosevalueinquotes="false" field="cloupra__End_Date__c" operator="gte"/>
+      </conditions>
+      <actions/>
+    </model>
+    <model id="EntityPeople" limit="50" query="false" createrowifnonefound="false" datasource="salesforce" type="" sobject="cloupra__Relationship__c">
+      <fields>
+        <field id="cloupra__From_Person__c"/>
+        <field id="cloupra__From_Person__r.Name"/>
+      </fields>
+      <conditions>
+        <condition type="fieldvalue" value="" enclosevalueinquotes="true" field="cloupra__To_Organisation__c" fieldtargetobjects="Account" state="filterableoff" inactive="true" name="cloupra__To_Organisation__c"/>
+        <condition type="multiple" value="" field="cloupra__Relationship_Type__r.cloupra__Client_Role__c" operator="in" enclosevalueinquotes="true">
+          <values>
+            <value>Client Person</value>
+            <value>Provider Person</value>
+            <value>Employer Person</value>
+          </values>
+        </condition>
+      </conditions>
+      <actions/>
+    </model>
+  </models>
+  <components>
+    <grid uniqueid="sk-2A6PzW-186">
+      <divisions>
+        <division behavior="flex" minwidth="100px" ratio="1" verticalalign="top">
+          <components>
+            <pficore__populatecategories uniqueid="sk-LaSJx-812" model="ClientProcessStages" relatedto="Client Process Stage"/>
+          </components>
+        </division>
+        <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+          <components>
+            <pficore__populatecategories uniqueid="sk-PumcU-585" model="TaskPriorities" relatedto="Task Priority"/>
+          </components>
+        </division>
+        <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+          <components>
+            <pficore__populatecategories uniqueid="sk-9PNwY-740" model="TaskStages" relatedto="Task Stage"/>
+          </components>
+        </division>
+        <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+          <components/>
+        </division>
+        <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+          <components/>
+        </division>
+        <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+          <components/>
+        </division>
+        <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+          <components/>
+        </division>
+        <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+          <components/>
+        </division>
+      </divisions>
+      <styles>
+        <styleitem type="background" bgtype="none"/>
+      </styles>
+    </grid>
+    <pagetitle uniqueid="exception-container" model="NewClientProcess" cssclass="">
+      <actions/>
+    </pagetitle>
+    <grid uniqueid="sk-Lclno-927">
+      <divisions>
+        <division behavior="flex" minwidth="100px" ratio="1">
+          <components>
+            <wizard uniqueid="sp-wizard" buttonslocation="top">
+              <steps>
+                <step stepid="step1" steplabel="Step 1 of 2: Select a Service &amp; Process Type">
+                  <components>
+                    <grid uniqueid="sk-LNwBP-11698">
+                      <divisions>
+                        <division behavior="flex" minwidth="100px" ratio="1">
+                          <components>
+                            <basicfieldeditor showheader="true" showsavecancel="false" model="NewClientProcess" buttonposition="" mode="edit" uniqueid="appliedProcessEdit" layout="above" cssclass="">
+                              <columns layoutmode="responsive" columngutter="30px" rowgutter="30px">
+                                <column ratio="1" minwidth="300px" behavior="flex" verticalalign="top">
+                                  <sections>
+                                    <section title="New Section" collapsible="no" showheader="false">
+                                      <fields>
+                                        <columns layoutmode="fixed" uniqueid="sk-3XVlCp-277">
+                                          <column width="50%">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="cloupra__Entity__c" showhelp="true" valuehalign="" type="" optionsource="" displaytemplate="{{Name}}{{#cloupra__Orgn_Type__c}} ({{{cloupra__Orgn_Type__c}}}){{/cloupra__Orgn_Type__c}}" required="false" searchtemplate="" cssclass="sp-entity" pagesize="5" uniqueid="sk-3XVlCB-266">
+                                                    <renderconditions logictype="and" onhidedatabehavior="keep"/>
+                                                    <enableconditions/>
+                                                    <searchfields/>
+                                                    <filters>
+                                                      <filter type="multiple" operator="in" field="cloupra__Orgn_Type__c" value="" enclosevalueinquotes="true">
+                                                        <values>
+                                                          <value>Client</value>
+                                                          <value>Employer</value>
+                                                        </values>
+                                                      </filter>
+                                                    </filters>
+                                                    <label>Entity</label>
+                                                  </field>
+                                                </fields>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                          <column width="50%">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="cloupra__Service__c" showhelp="true" valuehalign="" type="REFPICK" optionsource="model" cssclass="sp-service-picklist" snippet="" pagesize="5" optionmodel="Services" displaytemplate="{{Name}}{{#SUPPRESS}}{{cloupra__Client__r.Name}}{{/SUPPRESS}}" uniqueid="sk-3XVlCX-272">
+                                                    <renderconditions logictype="and" onhidedatabehavior="cancel">
+                                                      <rendercondition type="blank" operator="!=" fieldmodel="NewClientProcess" sourcetype="fieldvalue" field="cloupra__Entity__c" value="null" enclosevalueinquotes="false"/>
+                                                      <rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Services" sourcetype="modelproperty" sourceproperty="hasRows"/>
+                                                    </renderconditions>
+                                                    <enableconditions/>
+                                                    <searchfields/>
+                                                    <filters/>
+                                                    <label>Related To</label>
+                                                  </field>
+                                                  <field id="cloupra__Service__c" showhelp="true" valuehalign="" type="" cssclass="sp-service-ac" optionsource="" pagesize="5" displaytemplate="{{Name}}{{#SUPPRESS}}{{cloupra__Client__r.Name}}{{cloupra__Employer__r.Name}}{{/SUPPRESS}}" uniqueid="sk-3XVlCb-275">
+                                                    <renderconditions logictype="and" onhidedatabehavior="keep">
+                                                      <rendercondition type="blank" operator="=" fieldmodel="NewClientProcess" sourcetype="fieldvalue" field="cloupra__Entity__c" value="null" enclosevalueinquotes="false"/>
+                                                    </renderconditions>
+                                                    <enableconditions/>
+                                                    <filters>
+                                                      <filter type="fieldvalue" operator="=" enclosevalueinquotes="false" field="cloupra__Service_Type__r.cloupra__Active__c" value="true"/>
+                                                      <filter type="multiple" operator="in" field="cloupra__Service_Type__r.cloupra__Context__c" value="" enclosevalueinquotes="true">
+                                                        <values>
+                                                          <value>adviceservice</value>
+                                                          <value>memberaccount</value>
+                                                        </values>
+                                                      </filter>
+                                                    </filters>
+                                                    <searchfields/>
+                                                    <label>Related To</label>
+                                                  </field>
+                                                </fields>
+                                                <renderconditions logictype="and"/>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                        </columns>
+                                      </fields>
+                                      <renderconditions logictype="and">
+                                        <rendercondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="NewClientProcess" sourcetype="fieldvalue" field="FromContext" fieldtargetobjects="cloupra__Applied_Process__c" value="notperson"/>
+                                      </renderconditions>
+                                    </section>
+                                    <section title="New Section" collapsible="no" showheader="false">
+                                      <fields>
+                                        <columns layoutmode="fixed" uniqueid="sk-3XVlDI-291">
+                                          <column width="50%">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="cloupra__Person__c" showhelp="true" valuehalign="" type="" required="true" cssclass="sp-person" uniqueid="sk-3XVlD1-286">
+                                                    <renderconditions logictype="and" onhidedatabehavior="keep"/>
+                                                    <enableconditions/>
+                                                  </field>
+                                                </fields>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                          <column width="50%">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields/>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                        </columns>
+                                      </fields>
+                                      <renderconditions logictype="and">
+                                        <rendercondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="NewClientProcess" sourcetype="fieldvalue" field="FromContext" fieldtargetobjects="cloupra__Applied_Process__c" value="person"/>
+                                      </renderconditions>
+                                    </section>
+                                    <section title="" collapsible="no" showheader="true">
+                                      <fields>
+                                        <columns layoutmode="fixed" uniqueid="sk-3XVlDu-308">
+                                          <column width="50%">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="cloupra__Process__c" required="true" type="REFPICK" optionsource="model" addnoneoption="true" snippet="processSelection" optionmodel="Processes" showhelp="true" valuehalign="" cssclass="sp-process-type" pagesize="5" uniqueid="sk-3XVlDZ-300">
+                                                    <filters/>
+                                                    <searchfields/>
+                                                    <renderconditions logictype="and" onhidedatabehavior="keep"/>
+                                                    <label>Process Type</label>
+                                                    <enableconditions/>
+                                                  </field>
+                                                </fields>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                          <column width="50%">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="Name" required="true" valuehalign="" type="" snippet="" cssclass="sp-process-name" uniqueid="sk-3XVlDk-306">
+                                                    <renderconditions logictype="and" onhidedatabehavior="keep"/>
+                                                    <enableconditions/>
+                                                  </field>
+                                                </fields>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                        </columns>
+                                        <columns layoutmode="fixed" uniqueid="sk-3XVlEA-317">
+                                          <column width="100%">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="cloupra__Description__c" showhelp="true" valuehalign="" type="" cssclass="pf-destextarea" maxdisplaycharacters="" uniqueid="sk-3XVlE1-315">
+                                                    <renderconditions logictype="and" onhidedatabehavior="keep"/>
+                                                    <enableconditions/>
+                                                  </field>
+                                                </fields>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                        </columns>
+                                      </fields>
+                                      <renderconditions logictype="and"/>
+                                    </section>
+                                  </sections>
+                                </column>
+                                <column ratio="1" minwidth="300px" behavior="flex" verticalalign="top">
+                                  <sections>
+                                    <section title="" collapsible="no" showheader="false">
+                                      <fields>
+                                        <columns layoutmode="responsive" columngutter="4px" rowgutter="4px" uniqueid="sk-3XVlEi-329">
+                                          <column behavior="fit" verticalalign="top" cssclass="">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="OwnerId" type="" required="true" displaytemplate="" addnoneoption="false" valuehalign="" optionsource="" pagesize="5" uniqueid="sk-3XVlEZ-327">
+                                                    <label>Owner</label>
+                                                    <filters>
+                                                      <filter type="blank" operator="=" field="IsActive" value="true" enclosevalueinquotes="false"/>
+                                                      <filter type="fieldvalue" operator="does not contain" enclosevalueinquotes="true" field="Profile.Name" value="Chatter"/>
+                                                      <filter type="fieldvalue" operator="does not contain" enclosevalueinquotes="true" field="Name" value="Guest"/>
+                                                    </filters>
+                                                    <renderconditions logictype="and" onhidedatabehavior="keep"/>
+                                                    <enableconditions/>
+                                                  </field>
+                                                </fields>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                        </columns>
+                                        <columns layoutmode="responsive" columngutter="10px" rowgutter="4px" uniqueid="sk-3XVlFN-347">
+                                          <column behavior="fit" verticalalign="top">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="cloupra__Stage__c" type="REFPICK" optionsource="model" optionmodel="ClientProcessStages" readonly="false" required="true" addnoneoption="false" showhelp="true" valuehalign="" pagesize="5" uniqueid="sk-3XVlEt-336">
+                                                    <searchfields/>
+                                                    <filters/>
+                                                    <renderconditions logictype="and" onhidedatabehavior="keep"/>
+                                                    <enableconditions/>
+                                                  </field>
+                                                </fields>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                          <column behavior="fit" verticalalign="top">
+                                            <sections>
+                                              <section title="New Section" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="cloupra__Due_Date__c" showhelp="true" valuehalign="" type="" monthpicker="true" yearpicker="true" yearpickermin="c-10" yearpickermax="c+10" uniqueid="sk-3XVlF6-342" required="true">
+                                                    <renderconditions logictype="and" onhidedatabehavior="keep"/>
+                                                    <enableconditions/>
+                                                  </field>
+                                                </fields>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                        </columns>
+                                      </fields>
+                                    </section>
+                                  </sections>
+                                </column>
+                              </columns>
+                            </basicfieldeditor>
+                          </components>
+                        </division>
+                      </divisions>
+                      <styles>
+                        <styleitem type="background" bgtype="none"/>
+                      </styles>
+                    </grid>
+                  </components>
+                  <actions>
+                    <action type="multi" label="Cancel &amp; Finish" stepid="step1" window="self" icon="fa-remove" url="/apex/PracticeView" uniqueid="sk-3XVlFv-353" secondary="true">
+                      <models>
+                        <model>NewClientProcess</model>
+                      </models>
+                      <actions>
+                        <action type="showPopup" message="Are you sure you want to cancel without starting the process?">
+                          <popup title="Are you sure?" width="400">
+                            <components>
+                              <template multiple="true" model="RunningUser" allowhtml="true" uniqueid="sk-2D1_dI-599">
+                                <contents>&lt;div class=&quot;pf-alertpopuptext&quot;&gt;Are you sure you want to cancel without starting the process?&lt;/div&gt;</contents>
+                              </template>
+                              <pagetitle model="RunningUser" cssclass="alertpopupbuttons" uniqueid="sk-2D1_dI-600">
+                                <actions>
+                                  <action type="multi" label="Yes, Cancel" window="self" cssclass="ui-button" uniqueid="sk-ODBih-639">
+                                    <actions>
+                                      <action type="cancel">
+                                        <models>
+                                          <model>NewClientProcess</model>
+                                          <model>NewTasks</model>
+                                        </models>
+                                      </action>
+                                      <action type="custom" window="self" url="/apex/{{{$Model.RedirectValues.data.0.FirstName}}}?id={{{$Model.RedirectValues.data.0.LastName}}}" snippet="pfi.processBackAction"/>
+                                      <action type="closeTopmostPopup"/>
+                                    </actions>
+                                  </action>
+                                  <action type="multi" label="No, Continue" window="self" uniqueid="sk-ODBii-642" secondary="true">
+                                    <actions>
+                                      <action type="closeTopmostPopup"/>
+                                    </actions>
+                                  </action>
+                                </actions>
+                              </pagetitle>
+                            </components>
+                          </popup>
+                        </action>
+                      </actions>
+                      <hotkeys/>
+                    </action>
+                    <action type="multi" label="Next" icon="fa-arrow-right" stepid="step2" window="self" snippet="generateTasks" uniqueid="process-launch-next">
+                      <actions>
+                        <action type="custom" snippet="validateStep1"/>
+                        <action type="custom" snippet="validateOwnerRequired"/>
+                        <action type="custom" snippet="validateEntityOrServiceMust"/>
+                        <action type="custom" snippet="generateTasks"/>
+                        <action type="navigateToStep" snippet="generateTasks" stepid="step2"/>
+                      </actions>
+                    </action>
+                  </actions>
+                </step>
+                <step stepid="step2" steplabel="Step 2 of 2: Create Tasks" loadlazypanels="false">
+                  <components>
+                    <grid uniqueid="sk-LNqLR-1144">
+                      <divisions>
+                        <division behavior="flex" minwidth="100px" ratio="1" verticalalign="top">
+                          <components>
+                            <skootable showconditions="true" showsavecancel="false" searchmethod="server" searchbox="false" showexportbuttons="false" pagesize="all" createrecords="true" model="NewTasks" mode="edit" uniqueid="launchclient-step2-table" buttonposition="">
+                              <fields>
+                                <field id="Name" uniqueid="fi-eUPhD-396" required="true"/>
+                                <field id="cloupra__Due_Date__c" monthpicker="true" yearpicker="true" yearpickermin="c-10" yearpickermax="c+10" uniqueid="fi-eUPhD-397"/>
+                                <field id="cloupra__Priority__c" type="REFPICK" snippet="" required="false" optionsource="model" optionmodel="TaskPriorities" uniqueid="fi-eUPhD-399">
+                                  <filters/>
+                                  <searchfields/>
+                                </field>
+                                <field id="cloupra__Stage__c" type="REFPICK" snippet="" required="false" optionsource="model" optionmodel="TaskStages" uniqueid="fi-eUPhD-400">
+                                  <filters/>
+                                  <searchfields/>
+                                </field>
+                                <field id="OwnerId" hideable="true" uniqueid="fi-1Wg-1414" allowordering="true" redirecttype="none">
+                                  <label>Assigned To</label>
+                                  <filters>
+                                    <filter type="fieldvalue" operator="=" enclosevalueinquotes="false" field="IsActive" fieldtargetobjects="User" value="true"/>
+                                    <filter type="fieldvalue" operator="does not contain" enclosevalueinquotes="true" field="Profile.Name" value="chatter"/>
+                                    <filter type="fieldvalue" operator="does not contain" enclosevalueinquotes="true" field="Profile.Name" value="Guest"/>
+                                  </filters>
+                                </field>
+                              </fields>
+                              <rowactions>
+                                <action type="drawer" openicon="fa-long-arrow-up" icon="fa-long-arrow-down">
+                                  <drawer title="Drawer Area" width="90%" closehandle="true">
+                                    <components>
+                                      <basicfieldeditor showheader="true" showsavecancel="false" mode="edit" model="NewTasks" uniqueid="sk-2rtM-2111" layout="above">
+                                        <conditions>
+                                          <condition type="contextrow" field="Id" mergefield="Id" autocreated="true"/>
+                                        </conditions>
+                                        <columns>
+                                          <column width="100%">
+                                            <sections>
+                                              <section title="Section A" collapsible="no" showheader="false">
+                                                <fields>
+                                                  <field id="cloupra__Rich_Description__c" uniqueid="sk-2rtM-2109" cssclass="pf-richtextfield"/>
+                                                  <columns uniqueid="sk-2rte-2302" layoutmode="responsive" columngutter="4px" rowgutter="4px">
+                                                    <column behavior="specified" uniqueid="sk-2rv_-2703" verticalalign="top" width="300px" cssclass="suppress">
+                                                      <sections>
+                                                        <section title="New Section" collapsible="no" uniqueid="sk-2rv_-2704" showheader="false">
+                                                          <fields>
+                                                            <field id="OwnerId" uniqueid="sk-2rtM-2070">
+                                                              <label>Assigned To</label>
+                                                            </field>
+                                                          </fields>
+                                                        </section>
+                                                      </sections>
+                                                    </column>
+                                                    <column uniqueid="sk-2rte-2284" behavior="fit" verticalalign="top">
+                                                      <sections>
+                                                        <section title="New Section" collapsible="no" uniqueid="sk-2rte-2285" showheader="false">
+                                                          <fields>
+                                                            <field uniqueid="sk-2ru9-2487" id="cloupra__Estimated_Effort_Days__c" required="true">
+                                                              <label>Estimate</label>
+                                                            </field>
+                                                          </fields>
+                                                        </section>
+                                                      </sections>
+                                                    </column>
+                                                    <column uniqueid="sk-2ru4-2433" behavior="fit" verticalalign="top">
+                                                      <sections>
+                                                        <section title="New Section" collapsible="no" uniqueid="sk-2ru4-2434" showheader="false">
+                                                          <fields>
+                                                            <field uniqueid="sk-2ru9-2488" id="cloupra__Estimated_Effort_Hours__c" required="true">
+                                                              <label> &amp;nbsp;</label>
+                                                            </field>
+                                                          </fields>
+                                                        </section>
+                                                      </sections>
+                                                    </column>
+                                                    <column uniqueid="sk-2ru4-2442" behavior="fit" verticalalign="top">
+                                                      <sections>
+                                                        <section title="New Section" collapsible="no" uniqueid="sk-2ru4-2443" showheader="false">
+                                                          <fields>
+                                                            <field uniqueid="sk-2ru9-2489" id="cloupra__Estimated_Effort_Minutes__c" required="true">
+                                                              <label> &amp;nbsp;</label>
+                                                            </field>
+                                                          </fields>
+                                                        </section>
+                                                      </sections>
+                                                    </column>
+                                                    <column behavior="flex" uniqueid="sk-2rw5-2826" ratio="1" minwidth="0px" verticalalign="top">
+                                                      <sections>
+                                                        <section title="New Section" collapsible="no" uniqueid="sk-2rw5-2827" showheader="false">
+                                                          <fields/>
+                                                        </section>
+                                                      </sections>
+                                                    </column>
+                                                  </columns>
+                                                </fields>
+                                              </section>
+                                            </sections>
+                                          </column>
+                                        </columns>
+                                        <renderconditions logictype="and"/>
+                                      </basicfieldeditor>
+                                    </components>
+                                  </drawer>
+                                  <renderconditions logictype="and"/>
+                                </action>
+                              </rowactions>
+                              <massactions usefirstitemasdefault="true">
+                                <action type="massdelete"/>
+                                <action type="massupdate"/>
+                              </massactions>
+                              <views>
+                                <view type="standard"/>
+                              </views>
+                            </skootable>
+                          </components>
+                        </division>
+                      </divisions>
+                      <styles>
+                        <styleitem type="background" bgtype="none"/>
+                      </styles>
+                    </grid>
+                  </components>
+                  <actions>
+                    <action type="navigate" label="Prev" icon="fa-arrow-left" stepid="step1" window="self" uniqueid="step2-perv-btn"/>
+                    <action type="multi" label="Cancel &amp; Finish" stepid="step1" window="self" icon="fa-remove" url="/apex/PracticeView" uniqueid="sk-3XVlIK-397" secondary="true">
+                      <models>
+                        <model>NewClientProcess</model>
+                      </models>
+                      <actions>
+                        <action type="showPopup" message="Are you sure you want to cancel without starting the process?">
+                          <popup title="Are you sure?" width="400">
+                            <components>
+                              <template multiple="true" model="RunningUser" allowhtml="true" uniqueid="sk-2D1_dI-601">
+                                <contents>&lt;div class=&quot;alertpopuptext&quot;&gt;Are you sure you want to cancel without starting the process?&lt;/div&gt;</contents>
+                              </template>
+                              <pagetitle model="RunningUser" cssclass="alertpopupbuttons" uniqueid="sk-2D1_dI-602">
+                                <actions>
+                                  <action type="multi" label="Yes, Cancel" window="self" uniqueid="sk-ODEzl-674">
+                                    <actions>
+                                      <action type="cancel">
+                                        <models>
+                                          <model>NewClientProcess</model>
+                                          <model>NewTasks</model>
+                                        </models>
+                                      </action>
+                                      <action type="custom" window="self" url="" snippet="pfi.processBackAction"/>
+                                      <action type="closeTopmostPopup"/>
+                                    </actions>
+                                  </action>
+                                  <action type="multi" label="No, Continue" window="self" uniqueid="sk-ODEzn-677" secondary="true">
+                                    <actions>
+                                      <action type="closeTopmostPopup"/>
+                                    </actions>
+                                  </action>
+                                </actions>
+                              </pagetitle>
+                            </components>
+                          </popup>
+                        </action>
+                      </actions>
+                      <hotkeys/>
+                    </action>
+                    <action type="multi" label="Save &amp; Finish" icon="fa-check" url="/apex/ClientView?id={{$Model.NewOrganisation.data.0.Id}}" window="self" snippet="saveAndRedirect" uniqueid="sk-3XVlIp-400">
+                      <models>
+                        <model>NewPrimaryContact</model>
+                        <model>NewSecondaryContacts</model>
+                        <model>NewOrganisation</model>
+                        <model>PriConRelationshipAdd</model>
+                        <model>SecConRelationshipAdd</model>
+                      </models>
+                      <actions>
+                        <action type="custom" snippet="validateStep2"/>
+                        <action type="blockUI" timeout="1500" message="Just a moment..."/>
+                        <action type="save" rollbackonanyerror="true">
+                          <models>
+                            <model>NewClientProcess</model>
+                            <model>NewTasks</model>
+                          </models>
+                        </action>
+                        <action type="updateRow" fieldmodel="NAV_ChildState" field="context" enclosevalueinquotes="true" value="process" affectedrows="context"/>
+                        <action type="updateRow" fieldmodel="NAV_ChildState" field="tab" enclosevalueinquotes="true" value="basics" affectedrows="context"/>
+                        <action type="updateRow" fieldmodel="NAV_ChildState" field="action" enclosevalueinquotes="true" value="view" affectedrows="context"/>
+                        <action type="updateRow" fieldmodel="NAV_ChildState" field="id1" enclosevalueinquotes="true" value="{{{$Model.NewClientProcess.data.0.Id}}}" affectedrows="context"/>
+                        <action type="custom" snippet="pfi.processGlobalAction"/>
+                      </actions>
+                      <hotkeys/>
+                    </action>
+                  </actions>
+                </step>
+              </steps>
+              <renderconditions logictype="and"/>
+            </wizard>
+          </components>
+        </division>
+      </divisions>
+      <styles>
+        <styleitem type="background" bgtype="none"/>
+      </styles>
+    </grid>
+  </components>
+  <resources>
+    <labels/>
+    <javascript>
+      <jsitem location="inline" name="validateAndGenerateTasks" cachelocation="false" url="">(function(skuid){
+	var $ = skuid.$;
+	//$(document.body).one(&apos;pageload&apos;,function() {
+	$(&apos;#main-include&apos;).one(&apos;pageload&apos;,function() {    
+		var models = skuid.model.map();
+		var newClientProcess = models.NewClientProcess;
+		var newTasks = models.NewTasks;		
+        var newProcess = models.Process;
+        var editor = $(&apos;#exception-container&apos;).data(&apos;object&apos;).editor;
+        var isEmpty = function(val) {
+            return /^\s*$/.test(val);
+        };
+        
+		skuid.snippet.registerSnippet(&apos;validateStep1&apos;, function() {
+            return skuid.snippet.getSnippet(&apos;pfi.validateFields&apos;)([&apos;NewClientProcess&apos;], &apos;#exception-container&apos;);
+		});
+
+		skuid.snippet.registerSnippet(&apos;validateStep2&apos;, function() {
+            return skuid.snippet.getSnippet(&apos;pfi.validateFields&apos;)([&apos;NewTasks&apos;], &apos;#exception-container&apos;);
+		});
+		
+	    skuid.snippet.registerSnippet(&apos;validateEntityOrServiceMust&apos;, function() {
+	        editor.clearMessages();
+	        var validationErrors = [];
+            var entity = $(&apos;.sp-entity input&apos;).val();
+            var srv = $(&apos;.sp-service-picklist input&apos;).val();
+            var allSrv = $(&apos;.sp-service-ac input&apos;).val();
+            var person = $(&apos;.sp-person input&apos;).val();
+
+
+            
+            var relatedToValidationMsg = &apos;Required Field have no Value [Entity] OR [Service]&apos;;
+            
+            if((!entity || isEmpty(entity)) &amp;&amp; (!srv || isEmpty(srv)) &amp;&amp; (!allSrv || isEmpty(allSrv)) &amp;&amp; (!person || isEmpty(person))) {
+                validationErrors.push({message:relatedToValidationMsg, severity:&apos;ERROR&apos;});
+			}
+            // Check whether validation errors were found
+            if (validationErrors.length) {
+                editor.handleMessages(validationErrors);
+            	return false;
+			} 
+            else {
+                return true;
+			}	        
+		});
+	    
+	    skuid.snippet.registerSnippet(&apos;generateTasks&apos;, function(params) {
+			$.blockUI({
+				message: &apos;Retrieving the steps for this process type. Hold on a moment...&apos;,
+				css:{
+					top:&apos;200px&apos;
+				}
+			});
+			
+			/*
+            var getDueDate = function(aDate, days) { // calculates due date excluding weekends
+            	while(days &gt; 0) {		
+            		aDate.setDate(aDate.getDate() + 1);
+            		var dayOfWeek = aDate.getDay(); // 0 = Sunday, .., 6 = Saturday
+            		if (dayOfWeek != 0 &amp;&amp; dayOfWeek != 6) 			
+            			days--;
+            	}
+            	return aDate;
+            };
+            */
+            
+            var getDueDateBackwards = function(aDate, days) { // calculates due date backwards excluding weekends
+            	while(days &gt; 0) {
+            		aDate.setDate(aDate.getDate() - 1);
+            		var dayOfWeek = aDate.getDay(); // 0 = Sunday, .., 6 = Saturday
+            		if (dayOfWeek != 0 &amp;&amp; dayOfWeek != 6) 
+            			days--;
+            	}
+            	return aDate;
+            };			
+			
+			//remove all rows from task model
+	        if(skuid.$M(&apos;NewTasks&apos;).data[0]) {
+			    skuid.$M(&apos;NewTasks&apos;).emptyData();
+			}
+			var client = models.Client;
+			var clientRow = client ? client.getFirstRow() : null;
+			var cpRow = newClientProcess.getFirstRow();
+			
+			//Get the selected process from Step 1.
+			//var selectedProcess = newClientProcess.getFirstRow().cloupra__Process__c;
+			var processSteps = models.ProcessSteps;
+			//var processStepDeps = models.ProcessStepDeps;
+			//Deactivate all of the filterable conditions (filterable conditions have names)
+			$.each(processSteps.conditions, function (i, condition) {
+				if (condition.name) processSteps.deactivateCondition(condition);
+			});
+			
+			var relDef = $.Deferred();
+			var processDef = $.Deferred();
+			var userDef = $.Deferred();
+			
+			var teamMember = skuid.utils.userInfo.userId;
+			var orgn;
+			var tmName = skuid.utils.userInfo.name;
+			var tmMap = {};
+			var orgnMap = {};
+			
+			var ownerList = [];
+			var inactiveUsers = {};
+			var newTaskRows = {};
+			
+			//Plug that selected process into the Process Steps model
+			//(to retrieve the steps for the process).
+			var psCondition = processSteps.getConditionByName(&apos;SelectedProcessId&apos;);
+			processSteps.setCondition(psCondition, newClientProcess.getFirstRow().cloupra__Process__c);
+			
+			//Update the ProcessSteps model and when results are returned, generate a task per process step
+			skuid.model.updateData([processSteps], function(results){   
+				processDef.resolve();
+			});
+			
+			processDef.then(function() {
+				//Cache RelationshipType
+				var relTypes = [];
+				
+				$.each(processSteps.data,function(i,processStep) {
+					if(this.cloupra__Assignment_Type__c == &apos;Specify Now&apos;) {
+					  ownerList.push(this.OwnerId);
+					}
+					
+					//if(this.cloupra__Assignment_Type__c == &apos;Assign to Service/Client Owner&apos;) {}
+					
+					if(this.cloupra__Assignment_Type__c == &apos;Specify by Relationship&apos; || this.cloupra__Assignment_Type__c == &apos;Specify by Relationship to Service/Client Owner&apos; || this.cloupra__Assignment_Type__c == &apos;Specify by Relationship to Client&apos;) {
+						relTypes.push(this.cloupra__Relationship_Type__c);
+					}
+				});
+				
+				//console.log(cpRow);
+				if(cpRow &amp;&amp; cpRow.cloupra__Service__r) {
+					teamMember = cpRow.cloupra__Service__r.OwnerId;
+					tmName = cpRow.cloupra__Service__r.Owner ? cpRow.cloupra__Service__r.Owner.Name : &apos;&apos;;
+				    ownerList.push(teamMember);
+				}				
+				else if(cpRow &amp;&amp; cpRow.cloupra__Entity__r) {
+					teamMember = cpRow.cloupra__Entity__r.OwnerId;
+					tmName = cpRow.cloupra__Entity__r.Owner ? cpRow.cloupra__Entity__r.Owner.Name : &apos;&apos;;
+					orgn = cpRow.cloupra__Entity__c;
+				    ownerList.push(teamMember);
+				}
+				
+				if(relTypes.length) {    
+					var relModel = skuid.$M(&apos;Relationships&apos;);
+					var tmCond = relModel.getConditionByName(&apos;cloupra__To_Team_Member__c&apos;);
+					var rtCond = relModel.getConditionByName(&apos;cloupra__Relationship_Type__c&apos;);
+					var orgCond = relModel.getConditionByName(&apos;cloupra__To_Organisation__c&apos;);
+					
+					relModel.setCondition(tmCond, teamMember);
+					relModel.setCondition(rtCond, relTypes);
+					relModel.setCondition(orgCond, orgn);
+					
+					relModel.updateData(function() {
+						$.each(relModel.data, function() {
+						    if (this.cloupra__To_Team_Member__c !== undefined) {
+							    tmMap[this.cloupra__Relationship_Type__c] = this;
+						    }
+						    if (this.cloupra__To_Organisation__c !== undefined) {
+							    orgnMap[this.cloupra__Relationship_Type__c] = this;
+						    }
+				            ownerList.push(this.cloupra__From_Team_Member__c);
+
+						});
+						relDef.resolve();
+					});
+				}
+				else {
+					relDef.resolve();
+				}				
+			});	
+			
+			relDef.then(function() {
+			    var inactiveUserModel = skuid.$M(&apos;InactiveUsers&apos;);
+			    var theCond = inactiveUserModel.getConditionByName(&apos;userIds&apos;);
+			    inactiveUserModel.setCondition(theCond, ownerList);
+			    inactiveUserModel.updateData(function() {
+			        $.each(inactiveUserModel.data, function() {
+			            inactiveUsers[this.Id] = this;
+			        });
+			        userDef.resolve();
+			        
+			    });
+			});
+			
+			userDef.then(function() {
+				if(!newTasks.getFirstRow()) {
+					$.each(processSteps.data,function(i, processStep) {
+					    var row = newTasks.createRow();
+					    
+						/*
+						// if we make task stage required we will have to set process step stage 
+						// while creating a row
+						var row = newTasks.createRow({ 
+                        	additionalConditions: [						
+                        		{ field: &apos;cloupra__Stage__c&apos;,
+                        			value: processStep.cloupra__Stage__c,                
+                        			operator: &apos;=&apos;
+                        		}                
+                        	] 
+                        });
+                        */
+                         
+                        var apRow = newClientProcess.getFirstRow();
+                        console.log(apRow);
+                        console.log(processStep);
+                        var dueDate = processStep.cloupra__Due_Date__c;
+					    if(apRow.cloupra__Process__r.cloupra__Task_Due_Date_Basis__c == &apos;Process Due Date&apos;) {
+					        var backwardDueDate = new Date();
+					        if(apRow.cloupra__Due_Date__c &amp;&amp; processStep.cloupra__Due_Date_Offset__c != null) {
+					            var jsAPDueDate = skuid.time.parseSFDate(apRow.cloupra__Due_Date__c);
+					            console.log(jsAPDueDate + &apos;AppliedProcess&apos;); 
+					            backwardDueDate = getDueDateBackwards(jsAPDueDate, processStep.cloupra__Due_Date_Offset__c);
+					        }
+					        
+					        if(backwardDueDate &lt; new Date())
+					            backwardDueDate = new Date();
+					       
+					       dueDate = skuid.time.getSFDate(backwardDueDate);
+					    }
+					    
+                        
+						var delta = {
+							OwnerId: skuid.utils.userInfo.userId,
+							Name: processStep.cloupra__Task_Subject__c,
+							cloupra__Rich_Description__c: processStep.cloupra__Description__c,
+							//cloupra__Due_Date__c: processStep.cloupra__Due_Date__c,
+							cloupra__Due_Date__c: dueDate,
+							
+							cloupra__Stage__c: processStep.cloupra__Stage__c,
+							cloupra__Estimated_Effort_Days__c: processStep.cloupra__Estimated_Effort_Days__c,
+							cloupra__Estimated_Effort_Hours__c: processStep.cloupra__Estimated_Effort_Hours__c,
+							cloupra__Estimated_Effort_Minutes__c: processStep.cloupra__Estimated_Effort_Minutes__c,
+							cloupra__Task_Group__c: processStep.cloupra__Task_Group__c,
+							cloupra__Priority__c: processStep.cloupra__Priority__c,
+							cloupra__Process_Step__c: processStep.Id
+						};
+						if(processStep.cloupra__Assignment_Type__c == &apos;Specify Now&apos;) {
+						    if(!inactiveUsers[processStep.OwnerId])
+							    $.extend(delta, {OwnerId : processStep.OwnerId});
+						}
+						else if(processStep.cloupra__Assignment_Type__c == &apos;Assign to Process Owner&apos;) {
+					        $.extend(delta, {OwnerId : cpRow.OwnerId});
+						}
+						else if(processStep.cloupra__Assignment_Type__c == &apos;Assign to Service/Client Owner&apos;) {
+						    if(!inactiveUsers[teamMember])
+						        $.extend(delta, {OwnerId : teamMember, Owner: {Id:teamMember, Name:tmName}});
+						}
+						else if((processStep.cloupra__Assignment_Type__c == &apos;Specify by Relationship&apos; || processStep.cloupra__Assignment_Type__c == &apos;Specify by Relationship to Service/Client Owner&apos;) &amp;&amp; tmMap[processStep.cloupra__Relationship_Type__c]) {
+						    var relatedOwner = tmMap[processStep.cloupra__Relationship_Type__c].cloupra__From_Team_Member__c;
+						    var relatedOwnerName = tmMap[processStep.cloupra__Relationship_Type__c].cloupra__From_Team_Member__r.Name;
+						    if(!inactiveUsers[relatedOwner])
+							    $.extend(delta,{OwnerId : relatedOwner, Owner: {Id:relatedOwner, Name:relatedOwnerName}});
+						}
+						else if (processStep.cloupra__Assignment_Type__c == &apos;Specify by Relationship to Client&apos; &amp;&amp; orgnMap[processStep.cloupra__Relationship_Type__c]) {
+						    var relatedOwner = orgnMap[processStep.cloupra__Relationship_Type__c].cloupra__From_Team_Member__c;
+						    var relatedOwnerName = orgnMap[processStep.cloupra__Relationship_Type__c].cloupra__From_Team_Member__r.Name;
+						    if(!inactiveUsers[relatedOwner])
+							    $.extend(delta,{OwnerId : relatedOwner, Owner: {Id:relatedOwner, Name:relatedOwnerName}});
+						}
+						
+						newTaskRows[row.Id] = delta;
+						//newTasks.updateRow(row, delta);							
+					});
+					newTasks.updateRows(newTaskRows);
+				}
+				$.unblockUI();
+			});				
+		});
+    });
+})(skuid);</jsitem>
+      <jsitem location="inlinesnippet" name="renderProcessType" cachelocation="false">var params = arguments[0],
+	$ = skuid.$;
+if($(&apos;.sp-process-type .nx-field&apos;).data(&apos;object&apos;))
+    $(&apos;.sp-process-type .nx-field&apos;).data(&apos;object&apos;).render();</jsitem>
+      <jsitem location="inlinesnippet" name="renderService" cachelocation="false">var params = arguments[0],
+	$ = skuid.$;
+if(skuid.$M(&apos;Services&apos;).getFirstRow() &amp;&amp; params.row.cloupra__Entity__c)
+    if($(&apos;.sp-service-picklist .nx-field&apos;).data(&apos;object&apos;))
+        $(&apos;.sp-service-picklist .nx-field&apos;).data(&apos;object&apos;).render();
+if($(&apos;.sp-process-name .nx-field&apos;).data(&apos;object&apos;))   
+    $(&apos;.sp-process-name .nx-field&apos;).data(&apos;object&apos;).render();
+    </jsitem>
+      <jsitem location="inlinesnippet" name="renderProcessName" cachelocation="false">var field = arguments[0],
+value = arguments[1],
+$ = skuid.$;
+var model = field.model;
+var row = field.row;
+if(!row.cloupra__Process__c)
+    return;
+
+console.log(row);
+var processName = &apos;&apos;;
+// make Process name string based on Process type, client name/ Service name
+var client = row.cloupra__Entity__r ? (row.cloupra__Entity__r.Name.length &gt; 12 ?  row.cloupra__Entity__r.Name.substring(0, 12) : row.cloupra__Entity__r.Name) + &apos; - &apos; : &apos;&apos;;
+var service = row.cloupra__Service__r &amp;&amp; row.cloupra__Service__r.Name ? (row.cloupra__Service__r.Name.length &gt; 12 ?  row.cloupra__Service__r.Name.substring(0, 12) : row.cloupra__Service__r.Name) + &apos; - &apos; : &apos;&apos;;	
+var person = row.cloupra__Person__r ? (row.cloupra__Person__r.Name.length &gt; 12 ?  row.cloupra__Person__r.Name.substring(0, 12) : row.cloupra__Person__r.Name) + &apos; - &apos; : &apos;&apos;;
+
+var processType = row.cloupra__Process__r ? (row.cloupra__Process__r.Name.length &gt; 65 &amp;&amp; (client || service)  ? row.cloupra__Process__r.Name.substring(0, 65) : row.cloupra__Process__r.Name) : &apos;&apos;;
+
+
+if(!row.cloupra__Process__c || (row.cloupra__Process__r &amp;&amp; row.cloupra__Process__r.Name === &apos;--None--&apos;))
+   processName = &apos;&apos;;
+   
+else if(client !== &apos;&apos;){
+   processName = client + processType; 
+}
+else if(service !== &apos;&apos;) {
+	processName = service + processType;
+}
+else if(person !== &apos;&apos;) {
+	processName = person + processType;
+}
+
+else {
+	processName = processType;
+}
+
+
+//Render
+model.updateRow(row, {Name: processName});</jsitem>
+      <jsitem location="inlinesnippet" name="relativeProcessAssignment" cachelocation="false">var field = arguments[0],
+value = arguments[1],
+$ = skuid.$;
+var model = field.model;
+var row = field.row;
+var assignUser = skuid.utils.userInfo.userId;
+var toTeamMember;
+var toClient;
+var process = row.cloupra__Process__r;
+
+
+if(!row || !row.cloupra__Process__r)
+    return;
+
+
+//Client Owner
+var row = skuid.$M(&apos;NewClientProcess&apos;).data[0];
+var assignType = row.cloupra__Process__r.cloupra__Assignment_Type__c;
+var processOwner = row.cloupra__Process__r.OwnerId;
+var processStage = row.cloupra__Process__r.cloupra__Stage__c;
+
+model.updateRow(row, {
+    OwnerId: assignUser, 
+    cloupra__Stage__c: row.cloupra__Process__r.cloupra__Stage__c ? row.cloupra__Process__r.cloupra__Stage__c : null
+});
+    
+if(row.cloupra__Service__r) {
+    toTeamMember = row.cloupra__Service__r.OwnerId;
+}				
+else if(row.cloupra__Entity__r) {
+    toTeamMember = row.cloupra__Entity__r.OwnerId;
+}
+
+if(row.cloupra__Entity__r) {
+    toClient = row.cloupra__Entity__c;
+}
+
+if (assignType == &apos;Specify Now&apos;) {
+    var processData = {
+        OwnerId: row.cloupra__Process__r ? row.cloupra__Process__r.OwnerId: null,
+        cloupra__Stage__c: row.cloupra__Process__r.cloupra__Stage__c ? row.cloupra__Process__r.cloupra__Stage__c : null
+    };
+    model.updateRow(row, processData);
+}
+if(assignType == &apos;Assign to Service/Client Owner&apos;) {
+    var processData  = {
+        OwnerId: toTeamMember ? toTeamMember : null,
+        cloupra__Stage__c: row.cloupra__Process__r.cloupra__Stage__c ? row.cloupra__Process__r.cloupra__Stage__c : null
+    };
+    model.updateRow(row, processData);
+}
+
+if(assignType == &apos;Specify by Relationship&apos; || assignType == &apos;Specify by Relationship to Service/Client Owner&apos; ) {
+    var relModel = skuid.$M(&apos;RelatedOwner&apos;);
+    var relCond = relModel.getConditionByName(&apos;serOrEntityOwner&apos;);
+    relModel.setCondition(relCond, toTeamMember);
+    relModel.deactivateCondition(relModel.getConditionByName(&apos;serOrClient&apos;));
+   
+    relModel.updateData(function() {
+        if(relModel.getFirstRow()) {
+            model.updateRow(row, {
+                OwnerId: relModel.getFirstRow().cloupra__From_Team_Member__c ,
+                cloupra__Stage__c: row.cloupra__Process__r.cloupra__Stage__c ? row.cloupra__Process__r.cloupra__Stage__c : null
+            });
+        }
+    });
+}
+if (assignType == &apos;Specify by Relationship to Client&apos;) {
+    var relModel = skuid.$M(&apos;RelatedOwner&apos;);
+    var relCond = relModel.getConditionByName(&apos;serOrClient&apos;);
+    relModel.setCondition(relCond, toClient);
+    relModel.deactivateCondition(relModel.getConditionByName(&apos;serOrEntityOwner&apos;));
+    
+    relModel.updateData(function() {
+        if(relModel.getFirstRow()) {
+            model.updateRow(row, {
+                OwnerId: relModel.getFirstRow().cloupra__From_Team_Member__c ,
+                cloupra__Stage__c: row.cloupra__Process__r.cloupra__Stage__c ? row.cloupra__Process__r.cloupra__Stage__c : null
+            });
+        }
+    });
+}
+
+</jsitem>
+      <jsitem location="inline" name="processSelection" cachelocation="false" url="">(function(skuid) {
+	var $ = skuid.$;
+	$(document.body).one(&apos;pageload&apos;,function() {
+        skuid.snippet.registerSnippet(&apos;processSelection&apos;, function () {
+		    var navState = skuid.$M(&apos;NAV_State&apos;).data[0];
+			var processModel = skuid.model.getModel(&apos;Processes&apos;);
+			var processCond = processModel.getConditionByName(&apos;cloupra__Related_To__c&apos;);
+            var newClientProcess = skuid.$M(&apos;NewClientProcess&apos;).data[0];
+            var condval = &apos;&apos;;
+			
+			//If no service selected, get processes that relate to &apos;Client&apos; or &apos;Employer&apos; or &apos;Client Entity&apos;
+			if(!newClientProcess.cloupra__Service__r) {
+				if(newClientProcess.cloupra__Entity__r) {					
+					var isForClient = (navState.internal_extraconditions.indexOf(&apos;&amp;clientId=001&apos;) &gt; -1 &amp;&amp; !newClientProcess.cloupra__Entity__r.cloupra__Orgn_Type__c) || (newClientProcess.cloupra__Entity__r.cloupra__Orgn_Type__c == &apos;Client&apos;);  				
+					
+					var isForEmployer = (navState.internal_extraconditions.indexOf(&apos;&amp;employerId=001&apos;) &gt; -1 &amp;&amp; !newClientProcess.cloupra__Entity__r.cloupra__Orgn_Type__c) || (newClientProcess.cloupra__Entity__r.cloupra__Orgn_Type__c == &apos;Employer&apos;);  
+					
+					var isForClientEntity = (navState.internal_extraconditions.indexOf(&apos;&amp;cliententityId=001&apos;) &gt; -1 &amp;&amp; !newClientProcess.cloupra__Entity__r.cloupra__Orgn_Type__c) || (newClientProcess.cloupra__Entity__r.cloupra__Orgn_Type__c == &apos;Client Entity&apos;);  				
+					
+					var isForProvider = (navState.internal_extraconditions.indexOf(&apos;&amp;providerId=001&apos;) &gt; -1 &amp;&amp; !newClientProcess.cloupra__Entity__r.cloupra__Orgn_Type__c) || (newClientProcess.cloupra__Entity__r.cloupra__Orgn_Type__c == &apos;Provider&apos;);  				
+					
+					console.log(&apos;For Provider : &apos; + isForProvider);
+					console.log(&apos;For Client : &apos; + isForClient);
+					console.log(&apos;For Client Entity : &apos; + isForClientEntity);
+					console.log(&apos;For Employer : &apos; + isForEmployer);
+					//Fetch processes Related_To = &apos;Client&apos;
+					if(isForClient) {
+					    condval = &apos;Client&apos;;
+					}
+					
+					if(isForClientEntity) {
+					    condval = &apos;Client Entity&apos;;
+					}				
+					
+					//Fetch processes Related_To = &apos;Employer&apos;				
+					if(isForEmployer) {
+					    condval = &apos;Employer&apos;;
+					}
+					
+					if(isForProvider) {
+					    condval = &apos;Provider&apos;;
+					}
+					
+				}
+			}			
+			//If a service is selected, 
+			else if(newClientProcess.cloupra__Service__r &amp;&amp; newClientProcess.cloupra__Service__r.cloupra__Service_Type__r) {
+                var isForAdviceService = (navState.internal_extraconditions.indexOf(&apos;&amp;adviceserviceId=&apos;) &gt; -1) || (newClientProcess.cloupra__Service__r.cloupra__Service_Type__r == &apos;adviceservice&apos;);
+				var isForMemberAccount = (navState.internal_extraconditions.indexOf(&apos;&amp;memberaccountId=&apos;) &gt; -1) || (newClientProcess.cloupra__Service__r.cloupra__Service_Type__r == &apos;memberaccount&apos;);  
+				//Fetch processes Related_To = &apos;Employer&apos;				
+				if(isForAdviceService) {
+				    condval = &apos;Advice Service&apos;;
+				}
+				
+				if(isForMemberAccount) {
+				    condval = &apos;Member Account&apos;;
+				}
+			}
+			
+			if(newClientProcess.cloupra__Person__r) {
+			    condval = &apos;Person&apos;;
+			}
+			
+			processModel.setCondition(processCond, condval);
+			//console.log(processModel);
+			processModel.updateData(function() {
+			    skuid.snippet.getSnippet(&apos;renderProcessType&apos;)();
+			});
+        });
+        // get right process Types on page load
+	    skuid.$M(&apos;NewClientProcess&apos;).once(&apos;initialized&apos;).then(function() {
+	        skuid.snippet.getSnippet(&apos;processSelection&apos;)();
+	    });
+	});
+})(skuid);</jsitem>
+      <jsitem location="inlinesnippet" name="validateOwnerRequired" cachelocation="false">var params = arguments[0],
+	$ = skuid.$;
+	
+var editor = $(&apos;#exception-container&apos;).data(&apos;object&apos;).editor;
+	
+editor.clearMessages();
+var validationErrors = [];
+
+var owner = skuid.$M(&apos;NewClientProcess&apos;).data[0].OwnerId;
+
+if(!owner) {
+    validationErrors.push({message: &apos;Required Field Empty [Owner]&apos;, severity:&apos;ERROR&apos;});
+}
+// Check whether validation errors were found
+if (validationErrors.length) {
+    editor.handleMessages(validationErrors);
+	return false;
+} 
+else {
+    return true;
+}</jsitem>
+      <jsitem location="inlinesnippet" name="renderProcessDueDate" cachelocation="false">var params = arguments[0],
+	$ = skuid.$;
+var model = params.model;
+var row = params.row;
+
+if(!row || !row.cloupra__Process__r)
+    return;
+
+var getDueDate = function(aDate, days) { // calculates due date excluding weekends
+	while(days &gt; 0) {		
+		aDate.setDate(aDate.getDate() + 1);
+		var dayOfWeek = aDate.getDay(); // 0 = Sunday, .., 6 = Saturday
+		if (dayOfWeek != 0 &amp;&amp; dayOfWeek != 6) 			
+			days--;
+	}
+	return aDate;
+};
+var dueDate = skuid.time.getSFDate(new Date());
+
+var interval = row.cloupra__Process__r.cloupra__Default_Duration__c;
+
+if(interval) {
+    var jsDueDate = getDueDate(new Date(), interval);
+    dueDate = skuid.time.getSFDate(jsDueDate);
+}
+model.updateRow(row, {cloupra__Due_Date__c: dueDate});
+
+</jsitem>
+    </javascript>
+    <css/>
+    <actionsequences uniqueid="sk-1kPBK8-630"/>
+  </resources>
+  <styles>
+    <styleitem type="background" bgtype="none"/>
+  </styles>
+</skuidpage>

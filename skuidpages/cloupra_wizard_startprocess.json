@@ -1,0 +1,9 @@
+{
+    "name": "wizard_startprocess",
+    "uniqueId": "cloupra_wizard_startprocess",
+    "type": "Desktop",
+    "module": "cloupra",
+    "maxAutoSaves": 200,
+    "isMasterPage": false,
+    "composerSettings": null
+}

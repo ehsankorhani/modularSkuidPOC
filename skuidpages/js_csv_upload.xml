@@ -1,0 +1,269 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" useviewportmeta="true" showheader="true">
+  <models/>
+  <components>
+    <template multiple="false" uniqueid="sk-1A_G-227" allowhtml="true">
+      <contents>&lt;div class=&quot;grid-container&quot;&gt;
+
+			&lt;div class=&quot;grid-25&quot;&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;download&quot;&gt; Download&lt;/label&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;stream&quot;&gt; Stream&lt;/label&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;chunk&quot;&gt; Chunk&lt;/label&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;worker&quot;&gt; Worker thread&lt;/label&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;header&quot;&gt; Header row&lt;/label&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;dynamicTyping&quot;&gt; Dynamic typing&lt;/label&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;fastmode&quot;&gt; Fast mode&lt;/label&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;skipEmptyLines&quot;&gt; Skip empty lines&lt;/label&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;step-pause&quot;&gt; Pause on step&lt;/label&gt;
+				&lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;print-steps&quot;&gt; Log each step/chunk&lt;/label&gt;
+				
+				&lt;label&gt;Delimiter: &lt;input type=&quot;text&quot; size=&quot;5&quot; placeholder=&quot;auto&quot; id=&quot;delimiter&quot;&gt; &lt;a href=&quot;javascript:&quot; id=&quot;insert-tab&quot;&gt;tab&lt;/a&gt;&lt;/label&gt;
+
+				Line Endings: 
+
+				&lt;label style=&quot;display: inline;&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;newline&quot; id=&quot;newline-auto&quot; checked&gt;Auto&lt;/label&gt;
+				&lt;label style=&quot;display: inline;&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;newline&quot; id=&quot;newline-n&quot;&gt;\n&lt;/label&gt;
+				&lt;label style=&quot;display: inline;&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;newline&quot; id=&quot;newline-r&quot;&gt;\r&lt;/label&gt;
+				&lt;label style=&quot;display: inline;&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;newline&quot; id=&quot;newline-rn&quot;&gt;\r\n&lt;/label&gt;				
+				
+				&lt;label&gt;Preview: &lt;input type=&quot;number&quot; min=&quot;0&quot; max=&quot;1000&quot; placeholder=&quot;default&quot; id=&quot;preview&quot;&gt;&lt;/label&gt;
+				
+				&lt;label&gt;Encoding: &lt;input type=&quot;text&quot; id=&quot;encoding&quot; placeholder=&quot;default&quot; size=&quot;10&quot;&gt;&lt;/label&gt;
+				
+				&lt;label&gt;Comment char: &lt;input type=&quot;text&quot; size=&quot;5&quot; maxlength=&quot;1&quot; placeholder=&quot;default&quot; id=&quot;comments&quot;&gt;&lt;/label&gt;
+				
+				&lt;label&gt;Papa.LocalChunkSize: &lt;input type=&quot;number&quot; min=&quot;0&quot; placeholder=&quot;default&quot; id=&quot;localChunkSize&quot;&gt;&lt;/label&gt;
+				
+				&lt;label&gt;Papa.RemoteChunkSize: &lt;input type=&quot;number&quot; min=&quot;0&quot; placeholder=&quot;default&quot; id=&quot;remoteChunkSize&quot;&gt;&lt;/label&gt;
+			&lt;/div&gt;
+
+			&lt;div class=&quot;grid-75 text-center&quot;&gt;
+
+				&lt;textarea id=&quot;input&quot; placeholder=&quot;Input&quot;&gt;Column 1,Column 2,Column 3,Column 4
+1-1,1-2,1-3,1-4
+2-1,2-2,2-3,2-4
+3-1,3-2,3-3,3-4
+40,41,42,43
+&quot;Quoted field&quot;,No quotes,&quot;Foo&quot;,&quot;bar&quot;,extra
+&quot;Field quoted with
+line break&quot;&lt;/textarea&gt;
+		
+				&lt;br&gt;
+				&lt;b&gt;or&lt;/b&gt;
+				&lt;br&gt;
+
+				&lt;input type=&quot;file&quot; id=&quot;files&quot; multiple&gt;
+			
+				&lt;br&gt;&lt;br&gt;
+
+				&lt;button id=&quot;submit-parse&quot;&gt;Parse&lt;/button&gt;
+				&amp;nbsp;
+				&lt;button id=&quot;submit-unparse&quot;&gt;Unparse&lt;/button&gt;
+
+				&lt;br&gt;&lt;br&gt;
+
+				&lt;i&gt;Open the Console in your browser&apos;s inspector tools to see results.&lt;/i&gt;
+			&lt;/div&gt;
+
+		&lt;/div&gt;</contents>
+    </template>
+  </components>
+  <resources>
+    <labels/>
+    <javascript>
+      <jsitem location="staticresource" name="papaparse" cachelocation="false" url="" namespace="cloupra" content_type="text/javascript">var params = arguments[0],
+	$ = skuid.$;
+</jsitem>
+      <jsitem location="inline" name="newInlineJS" cachelocation="false" url="">(function(skuid){
+	var $ = skuid.$;
+	$(document.body).one(&apos;pageload&apos;,function(){
+		var stepped = 0, chunks = 0, rows = 0;
+        var start, end;
+        var parser;
+        var pauseChecked = false;
+        var printStepChecked = false;
+        
+        $(function()
+        {
+        	$(&apos;#submit-parse&apos;).click(function()
+        	{
+        		stepped = 0;
+        		chunks = 0;
+        		rows = 0;
+        
+        		var txt = $(&apos;#input&apos;).val();
+        		var localChunkSize = $(&apos;#localChunkSize&apos;).val();
+        		var remoteChunkSize = $(&apos;#remoteChunkSize&apos;).val();
+        		var files = $(&apos;#files&apos;)[0].files;
+        		var config = buildConfig();
+        
+        		// NOTE: Chunk size does not get reset if changed and then set back to empty/default value
+        		if (localChunkSize)
+        			Papa.LocalChunkSize = localChunkSize;
+        		if (remoteChunkSize)
+        			Papa.RemoteChunkSize = remoteChunkSize;
+        
+        		pauseChecked = $(&apos;#step-pause&apos;).prop(&apos;checked&apos;);
+        		printStepChecked = $(&apos;#print-steps&apos;).prop(&apos;checked&apos;);
+        
+        
+        		if (files.length &gt; 0)
+        		{
+        			if (!$(&apos;#stream&apos;).prop(&apos;checked&apos;) &amp;&amp; !$(&apos;#chunk&apos;).prop(&apos;checked&apos;))
+        			{
+        				for (var i = 0; i &lt; files.length; i++)
+        				{
+        					if (files[i].size &gt; 1024 * 1024 * 10)
+        					{
+        						alert(&quot;A file you&apos;ve selected is larger than 10 MB; please choose to stream or chunk the input to prevent the browser from crashing.&quot;);
+        						return;
+        					}
+        				}
+        			}
+        
+        			start = performance.now();
+        
+        			$(&apos;#files&apos;).parse({
+        				config: config,
+        				before: function(file, inputElem)
+        				{
+        					console.log(&quot;Parsing file:&quot;, file);
+        				},
+        				complete: function()
+        				{
+        					console.log(&quot;Done with all files.&quot;);
+        				}
+        			});
+        		}
+        		else
+        		{
+        			start = performance.now();
+        			var results = Papa.parse(txt, config);
+        			console.log(&quot;Synchronous parse results:&quot;, results);
+        		}
+        	});
+        
+        	$(&apos;#submit-unparse&apos;).click(function()
+        	{
+        		var input = $(&apos;#input&apos;).val();
+        		var delim = $(&apos;#delimiter&apos;).val();
+        		var header = $(&apos;#header&apos;).prop(&apos;checked&apos;);
+        
+        		var results = Papa.unparse(input, {
+        			delimiter: delim,
+        			header: header,
+        		});
+        
+        		console.log(&quot;Unparse complete!&quot;);
+        		console.log(&quot;--------------------------------------&quot;);
+        		console.log(results);
+        		console.log(&quot;--------------------------------------&quot;);
+        	});
+        
+        	$(&apos;#insert-tab&apos;).click(function()
+        	{
+        		$(&apos;#delimiter&apos;).val(&apos;\t&apos;);
+        	});
+        });
+        
+        
+        
+        function buildConfig()
+        {
+        	return {
+        		delimiter: $(&apos;#delimiter&apos;).val(),
+        		newline: getLineEnding(),
+        		header: $(&apos;#header&apos;).prop(&apos;checked&apos;),
+        		dynamicTyping: $(&apos;#dynamicTyping&apos;).prop(&apos;checked&apos;),
+        		preview: parseInt($(&apos;#preview&apos;).val() || 0),
+        		step: $(&apos;#stream&apos;).prop(&apos;checked&apos;) ? stepFn : undefined,
+        		encoding: $(&apos;#encoding&apos;).val(),
+        		worker: $(&apos;#worker&apos;).prop(&apos;checked&apos;),
+        		comments: $(&apos;#comments&apos;).val(),
+        		complete: completeFn,
+        		error: errorFn,
+        		download: $(&apos;#download&apos;).prop(&apos;checked&apos;),
+        		fastMode: $(&apos;#fastmode&apos;).prop(&apos;checked&apos;),
+        		skipEmptyLines: $(&apos;#skipEmptyLines&apos;).prop(&apos;checked&apos;),
+        		chunk: $(&apos;#chunk&apos;).prop(&apos;checked&apos;) ? chunkFn : undefined,
+        		beforeFirstChunk: undefined,
+        	};
+        
+        	function getLineEnding()
+        	{
+        		if ($(&apos;#newline-n&apos;).is(&apos;:checked&apos;))
+        			return &quot;\n&quot;;
+        		else if ($(&apos;#newline-r&apos;).is(&apos;:checked&apos;))
+        			return &quot;\r&quot;;
+        		else if ($(&apos;#newline-rn&apos;).is(&apos;:checked&apos;))
+        			return &quot;\r\n&quot;;
+        		else
+        			return &quot;&quot;;
+        	}
+        }
+        
+        function stepFn(results, parserHandle)
+        {
+        	stepped++;
+        	rows += results.data.length;
+        
+        	parser = parserHandle;
+        
+        	if (pauseChecked)
+        	{
+        		console.log(results, results.data[0]);
+        		parserHandle.pause();
+        		return;
+        	}
+        
+        	if (printStepChecked)
+        		console.log(results, results.data[0]);
+        }
+        
+        function chunkFn(results, streamer, file)
+        {
+        	if (!results)
+        		return;
+        	chunks++;
+        	rows += results.data.length;
+        
+        	parser = streamer;
+        
+        	if (printStepChecked)
+        		console.log(&quot;Chunk data:&quot;, results.data.length, results);
+        
+        	if (pauseChecked)
+        	{
+        		console.log(&quot;Pausing; &quot; + results.data.length + &quot; rows in chunk; file:&quot;, file);
+        		streamer.pause();
+        		return;
+        	}
+        }
+        
+        function errorFn(error, file)
+        {
+        	console.log(&quot;ERROR:&quot;, error, file);
+        }
+        
+        function completeFn()
+        {
+        	end = performance.now();
+        	if (!$(&apos;#stream&apos;).prop(&apos;checked&apos;)
+        			&amp;&amp; !$(&apos;#chunk&apos;).prop(&apos;checked&apos;)
+        			&amp;&amp; arguments[0]
+        			&amp;&amp; arguments[0].data)
+        		rows = arguments[0].data.length;
+        
+        	console.log(&quot;Finished input (async). Time:&quot;, end-start, arguments);
+        	console.log(&quot;Rows:&quot;, rows, &quot;Stepped:&quot;, stepped, &quot;Chunks:&quot;, chunks);
+        }
+
+	});
+})(skuid);</jsitem>
+    </javascript>
+    <css/>
+    <actionsequences/>
+  </resources>
+  <styles>
+    <styleitem type="background" bgtype="none"/>
+  </styles>
+</skuidpage>
