@@ -63,3 +63,4 @@ typings/
 # skuid-salesforce
 debug/
 skuid-grunt/
+skuid-cli/
