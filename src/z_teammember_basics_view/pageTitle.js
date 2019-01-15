@@ -22,7 +22,11 @@ class pageTitle {
     const pageTilteEl = document.querySelector("#page-title-main .nx-template");
 
     if (pageTilteEl)
+<<<<<<< HEAD
       pageTilteEl.innerHTML = "Hello: " + this.getUser();
+=======
+      pageTilteEl.innerHTML = "User: " + this.getUser();
+>>>>>>> f6522a407e78b84c1a4311abebad3ec01785f915
   }
 }
 

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "practifi",
   "version": "1.0.0",
   "description": "Developmenty org",
@@ -18,6 +19,12 @@
   },
   "author": "Ehsan Korhani",
   "license": "ISC",
+=======
+  "name": "modularskuidpoc",
+  "version": "0.0.1",
+  "description": "A proof of concept for modular JavaScript and CSS in SKuid",
+  "main": "main.js",
+>>>>>>> f6522a407e78b84c1a4311abebad3ec01785f915
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
@@ -37,5 +44,15 @@
     "css-loader": "^2.0.2",
     "style-loader": "^0.23.1",
     "webpack": "^4.27.1"
+<<<<<<< HEAD
   }
+=======
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js -p",
+    "test": "jest"
+  },
+  "author": "Ehsan Korhani",
+  "license": "ISC"
+>>>>>>> f6522a407e78b84c1a4311abebad3ec01785f915
 }
