@@ -59,10 +59,7 @@ typings/
 
 # next.js build output
 .next
-<<<<<<< HEAD
 
 # skuid-salesforce
 debug/
 skuid-grunt/
-=======
->>>>>>> f6522a407e78b84c1a4311abebad3ec01785f915
