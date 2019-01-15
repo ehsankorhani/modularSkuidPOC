@@ -64,3 +64,4 @@ typings/
 debug/
 skuid-grunt/
 skuid-cli/
+config.json

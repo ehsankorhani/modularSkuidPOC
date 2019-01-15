@@ -4,7 +4,6 @@
   "description": "Developmenty org",
   "main": "main.js",
   "config": {
-    "page_list": "wizard_startprocess,shared_feed,js_csv_upload"
   },
   "scripts": {
     "skuid-pull": ".\\skuid-cli\\skuid_windows_amd64.exe pull --host %npm_package_config_host% --username %npm_package_config_username% --password %npm_package_config_password% --client-id %npm_package_config_clientId% --client-secret %npm_package_config_clientSecret% -n %npm_package_config_page_list%",
