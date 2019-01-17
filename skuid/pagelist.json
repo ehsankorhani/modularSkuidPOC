@@ -17,6 +17,6 @@
   },
   {
     "name": "test_page",
-    "included": false
+    "included": true
   }
 ]
