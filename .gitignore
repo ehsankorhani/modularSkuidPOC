@@ -63,5 +63,5 @@ typings/
 # skuid-salesforce
 debug/
 skuid-grunt/
-skuid-cli/
-config.json
+skuid-cli/config.json
+skuid-cli/*.exe

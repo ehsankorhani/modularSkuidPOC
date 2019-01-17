@@ -1,9 +1,0 @@
-{
-    "name": "shared_feed",
-    "uniqueId": "cloupra_shared_feed",
-    "type": "Desktop",
-    "module": "cloupra",
-    "maxAutoSaves": 200,
-    "isMasterPage": false,
-    "composerSettings": null
-}
