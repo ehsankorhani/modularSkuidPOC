@@ -1,5 +1,7 @@
-import {Index as TeamMemberBasicView} from './z_teammember_basics_view/index';
-import './z_teammember_basics_view/style.css';
+const {Index: TeamMemberBasicView} = require('./z_teammember_basics_view/index');
+//import {Index as TeamMemberBasicView} from './z_teammember_basics_view/index';
+require('./z_teammember_basics_view/style.css');
+//import './z_teammember_basics_view/style.css';
 
 (function(skuid){
   const $ = skuid.$,

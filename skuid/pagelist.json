@@ -1,22 +1,7 @@
-[
-  {
-    "name": "shared_feed",
-    "included": true
-  },
-  {
-    "name": "wizard_startprocess",
-    "included": true
-  },
-  {
-    "name": "js_csv_upload",
-    "included": true
-  },
-  {
-    "name": "zzzwizard_startprocess__test",
-    "included": true
-  },
-  {
-    "name": "test_page",
-    "included": true
-  }
-]
+{
+  "shared_feed": true,
+  "wizard_startprocess": false,
+  "js_csv_upload": true,
+  "zzzwizard_startprocess__test": false,
+  "test_page" : false
+}

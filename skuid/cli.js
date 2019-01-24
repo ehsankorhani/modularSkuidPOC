@@ -6,12 +6,18 @@ getPageList = function(staticPages, paramPages) {
   if (paramPages)
     return paramPages;
 
-  const selectedPages = staticPages.reduce(function(result, page) {
-    if (page.included) {
-      result.push(page.name);
-    }
-    return result;
-  }, []);
+  // const selectedPages = staticPages.reduce(function(result, page) {
+  //   if (page.included) {
+  //     result.push(page.name);
+  //   }
+  //   return result;
+  // }, []);
+
+  const selectedPages = [];
+
+  Object.keys(staticPages).forEach(function (key) {
+    if (staticPages[key]) selectedPages.push(key);
+  });
 
   return selectedPages.toString();
 }

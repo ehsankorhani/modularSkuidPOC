@@ -1,0 +1,22 @@
+[
+  {
+    "name": "shared_feed",
+    "included": true
+  },
+  {
+    "name": "wizard_startprocess",
+    "included": true
+  },
+  {
+    "name": "js_csv_upload",
+    "included": true
+  },
+  {
+    "name": "zzzwizard_startprocess__test",
+    "included": true
+  },
+  {
+    "name": "test_page",
+    "included": true
+  }
+]

@@ -4,6 +4,7 @@
   "description": "Developmenty org",
   "main": "main.js",
   "config": {
+    "port": "8080"
   },
   "scripts": {    
     "build": "webpack --config webpack.config.js -p",
